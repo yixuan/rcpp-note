@@ -1,28 +1,28 @@
 RObject
 =====================================
 
-``RObject`` can be thought of as the base class of all API classes in Rcpp.
+**RObject** can be thought of as the base class of all API classes in Rcpp.
 (Technically speaking this is even not true, but it's best to think in this way
-to understand the role of ``RObject``. See next paragraph for explanation.)
+to understand the role of **RObject**. See next paragraph for explanation.)
 It is not intended to be used directly, but rather it provides the basic
 structure of other API classes, and defines some member functions that are
 available to all derived classes.
 
-Precisely speaking, class ``RObject`` has no meaningful definition by its own, but
+Precisely speaking, class **RObject** has no meaningful definition by its own, but
 actually inherits from other four super-classes:
 
-- ``PreserveStorage``: This class provides the data field of the underlying R structure
-  (of type ``SEXP``) that actually describes this object in R. It also defines basic
+- **PreserveStorage**: This class provides the data field of the underlying R structure
+  (of type **SEXP**) that actually describes this object in R. It also defines basic
   member functions to get/set that field.
-- ``SlotProxyPolicy``: Defines member functions to manipulate slots of S4 objects.
-- ``AttributeProxyPolicy``: Defines member functions to work with attributes of objects.
-- ``RObjectMethods``: Basic functions that apply to all API classes.
+- **SlotProxyPolicy**: Defines member functions to manipulate slots of S4 objects.
+- **AttributeProxyPolicy**: Defines member functions to work with attributes of objects.
+- **RObjectMethods**: Basic functions that apply to all API classes.
 
-In some sense, the whole functionality of ``RObject`` is divided into four parts
+In some sense, the whole functionality of **RObject** is divided into four parts
 that are represented by the classes above. In fact, that API classes in Rcpp are
-derived from ``RObject`` is just an illusion -- They actually inherit from these
-four basic classes instead. But since ``RObject`` is almost equivalent to the combination
-of them, it is no harm to regard ``RObject`` as the parent of other API classes.
+derived from **RObject** is just an illusion -- They actually inherit from these
+four basic classes instead. But since **RObject** is almost equivalent to the combination
+of them, it is no harm to regard **RObject** as the parent of other API classes.
 
 Public Member Functions
 -------------------------
@@ -37,9 +37,9 @@ Constructors
 
 .. cpp:function:: RObject(const RObject& other)
 
-   Copy constructor. Resulting object will share the SEXP data with ``other``.
+   Copy constructor. Resulting object will share the SEXP data with *other*.
 
-Defined in ``RObject``
+Defined in **RObject**
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -49,9 +49,9 @@ Defined in ``RObject``
 .. cpp:function:: RObject& operator=(const T& other)
 
    Assignment operator. The left-hand-side object will share the SEXP data
-   of ``other``.
+   of *other*.
 
-Inherited from ``PreserveStorage``
+Inherited from **PreserveStorage**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. warning::
@@ -89,7 +89,7 @@ Inherited from ``PreserveStorage``
 
    Conversion operator to SEXP.
 
-Inherited from ``SlotProxyPolicy``
+Inherited from **SlotProxyPolicy**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
@@ -99,28 +99,28 @@ Inherited from ``SlotProxyPolicy``
 
 .. cpp:function:: SlotProxy slot(const std::string& name)
 
-   Extract the object in slot specified by ``name``. This can appear in
+   Extract the object in slot specified by *name*. This can appear in
    the left hand side of assignment.
 
 .. cpp:function:: const_SlotProxy slot(const std::string& name) const
 
-   Extract the object in slot specified by ``name``. Read-only.
+   Extract the object in slot specified by *name*. Read-only.
 
 .. cpp:function:: bool hasSlot(const std::string& name) const
 
-   Whether this object has a slot given by ``name``.
+   Whether this object has a slot given by *name*.
 
-Inherited from ``AttributeProxyPolicy``
+Inherited from **AttributeProxyPolicy**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. cpp:function:: AttributeProxy attr(const std::string& name)
 
-   Extract the object asscociated with attribute ``name``. This can appear in
+   Extract the object asscociated with attribute *name*. This can appear in
    the left hand side of assignment.
 
 .. cpp:function:: const_AttributeProxy attr(const std::string& name) const
 
-   Extract the object asscociated with attribute ``name``. Read-only.
+   Extract the object asscociated with attribute *name*. Read-only.
 
 .. cpp:function:: std::vector<std::string> attributeNames() const
    
@@ -128,9 +128,9 @@ Inherited from ``AttributeProxyPolicy``
 
 .. cpp:function:: bool hasAttribute(const std::string& name) const
 
-   Whether this object has an attribute whose name is specified by ``name``.
+   Whether this object has an attribute whose name is specified by *name*.
 
-Inherited from ``RObjectMethods``
+Inherited from **RObjectMethods**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. cpp:function:: bool isNULL() const
