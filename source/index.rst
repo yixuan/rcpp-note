@@ -3,7 +3,7 @@ Welcome to Rcpp Notes!
 
 This project is an **unofficial** documentation of `Rcpp <http://www.rcpp.org/>`_,
 an R package that provides a seamless integration of R and C++.
-The document here aims to provide a function-to-function reference of the most frequently
+The document here aims to provide a function-by-function reference of the most frequently
 used classes inside Rcpp, as well as some of my own understanding of this library.
 
 .. toctree::
