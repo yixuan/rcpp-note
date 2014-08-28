@@ -1,16 +1,16 @@
-.. Rcpp-note documentation master file, created by
-   sphinx-quickstart on Tue Aug 26 22:15:34 2014.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to Rcpp-note's documentation!
+Welcome to Rcpp Notes!
 =====================================
 
-Contents:
+This project is an **unofficial** documentation of `Rcpp <http://www.rcpp.org/>`_,
+an R package that provides a seamless integration of R and C++.
+The document here aims to provide a function-to-function reference of the most frequently
+used classes inside Rcpp, as well as some of my own understanding of this library.
 
 .. toctree::
    :maxdepth: 2
-
+   
+   intro
+   apiclass
 
 
 Indices and tables
