@@ -11,3 +11,4 @@ Rcpp code, so for clarity we may call them *API classes* of Rcpp.
    
    api/RObject
    api/Environment
+   api/Function
