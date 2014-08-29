@@ -10,3 +10,4 @@ Rcpp code, so for clarity we may call them *API classes* of Rcpp.
    :maxdepth: 1
    
    api/RObject
+   api/Environment
