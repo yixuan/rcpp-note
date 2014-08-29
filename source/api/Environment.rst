@@ -100,4 +100,20 @@ Defined in **Environment**
 
    Indicates if this is a user defined database.
  
+Inherited from **BindingPolicy**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. cpp:function:: Binding operator[](const std::string& name)
+
+   Extract the object with name *name* in this environment.
+   If this appears in the left hand side of assignment, the object
+   in the right hand side will be assigned to *name*.
+
+.. cpp:function:: const_Binding operator[](const std::string& name) const
+
+   Extract the object with name *name* in this environment. Read-only.
+
+Inherited from other classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See :doc:`RObject`.
