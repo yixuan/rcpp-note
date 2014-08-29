@@ -12,6 +12,10 @@ Constructors
    Default constructor. Resulting object is the global environment
    ``R_GlobalEnv`` (``.GlobalEnv`` in R).
 
+.. cpp:function:: Environment(const Environment& other)
+
+   Copy constructor. Resulting object will share the SEXP data with *other*.
+
 .. cpp:function:: Environment(SEXP x)
 
    Wrap a given environment.
@@ -99,7 +103,17 @@ Defined in **Environment**
 .. cpp:function:: bool is_user_database() const
 
    Indicates if this is a user defined database.
- 
+
+.. cpp:function:: Environment parent() const
+
+   Return the parent environment.
+
+.. cpp:function:: Environment new_child(bool hashed)
+
+   - *hashed*: if ``true``, the environment will use a hash table.
+   
+   Create a new environment whose parent is this environment.
+
 Inherited from **BindingPolicy**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -117,3 +131,33 @@ Inherited from other classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 See :doc:`RObject`.
+
+
+Static Public Member Functions
+-------------------------------
+
+.. cpp:function:: static Environment global_env()
+
+   Return the global environment. Equivalent R function is ``globalenv()``.
+
+.. cpp:function:: static Environment empty_env()
+
+   Return the empty environment. Equivalent R function is ``emptyenv()``.
+
+.. cpp:function:: static Environment base_env()
+
+   Return the base environment. Equivalent R function is ``baseenv()``.
+
+.. cpp:function:: static Environment base_namespace()
+
+   Return the base namespace. Equivalent R object is ``.BaseNamespaceEnv``.
+
+.. cpp:function:: static Environment Rcpp_namespace()
+
+   Return the Rcpp namespace.
+
+.. cpp:function:: static Environment namespace_env(const std::string& package)
+
+   Return the namespace of package *package*. If there is no such package,
+   an error will be thrown.
+
