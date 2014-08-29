@@ -13,3 +13,4 @@ Rcpp code, so for clarity we may call them *API classes* of Rcpp.
    api/Environment
    api/Function
    api/S4
+   api/Reference
