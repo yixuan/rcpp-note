@@ -1,6 +1,11 @@
 Environment
 =====================================
 
+The **Environment** class is used to wrap the environment objects in R. It can be useful to
+get or assign an object in an environment by specifying the variable name. Some advanced
+features of environment, such as locks and namespace, are also supported in the member
+functions.
+
 Public Member Functions
 -------------------------
 
@@ -126,6 +131,14 @@ Inherited from **BindingPolicy**
 .. cpp:function:: const_Binding operator[](const std::string& name) const
 
    Extract the object with name *name* in this environment. Read-only.
+
+Here is an example showing the usage of the getter/setter above:
+
+.. code-block:: cpp
+
+   Environment glob; // Default is the global environment
+   glob["x"] = Rcpp::rnorm(10); // Assign a vector to variable "x"
+   NumericVector xx = glob["x"]; // Get variable "x"
 
 Inherited from other classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
