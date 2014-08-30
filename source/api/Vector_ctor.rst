@@ -1,4 +1,4 @@
-Vector (Constructors)
+Vector (Typedefs and Constructors)
 =====================================
 
 The **Vector** class in Rcpp is a template class that represent various types of
@@ -172,7 +172,10 @@ Constructors
 
 .. cpp:function:: Vector(const VectorBase<RTYPE, NA, VEC>& other)
 
-   ???
+   Create a vector from another object that is also derived from the **VectorBase** class.
+   Typically *other* is an Rcpp sugar expression, in which case the expression is evaluated
+   and copied to the created vector. If *other* is actually a vector of the same element type,
+   this function is equivalent to a copy constructor.
 
 ``template <typename U>``
 
@@ -185,7 +188,8 @@ Constructors
 
 .. cpp:function:: Vector(const sugar::SingleLogicalResult<NA, T>& obj)
 
-   Create a vector from a sugar expression. ???
+   Create a vector of length 1 from an object of class **SingleLogicalResult**, usually the result
+   returned by ``Rcpp::all()`` or ``Rcpp::any()``.
 
 ``template <typename U1>``
 
