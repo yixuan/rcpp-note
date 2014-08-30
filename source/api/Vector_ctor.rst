@@ -1,7 +1,80 @@
 Vector (Constructors)
 =====================================
 
-Intro
+The **Vector** class in Rcpp is a template class that represent various types of
+vectors (integer, numeric, character, list, etc.) in R. It's also the foundation of
+**Matrix** and higher dimensional array structures. The **Vector** class accepts one
+major template parameter, ``RTYPE``, to indicate the type of its elements.
+
+Type Definitions
+------------------
+
+.. cpp:type:: ComplexVector
+   
+   ::
+     
+     typedef Vector<CPLXSXP> ComplexVector;
+
+.. cpp:type:: IntegerVector
+   
+   ::
+     
+     typedef Vector<INTSXP> IntegerVector;
+     
+.. cpp:type:: LogicalVector
+
+   ::
+
+      typedef Vector<LGLSXP> LogicalVector;
+
+.. cpp:type:: NumericVector
+
+   ::
+
+      typedef Vector<REALSXP> NumericVector;
+
+.. cpp:type:: DoubleVector
+
+   ::
+
+      typedef Vector<REALSXP> DoubleVector;
+
+.. cpp:type:: RawVector
+
+   ::
+
+      typedef Vector<RAWSXP> RawVector;
+
+.. cpp:type:: CharacterVector
+
+   ::
+
+      typedef Vector<STRSXP> CharacterVector;
+
+.. cpp:type:: StringVector
+
+   ::
+
+      typedef Vector<STRSXP> StringVector;
+
+.. cpp:type:: GenericVector
+
+   ::
+
+      typedef Vector<VECSXP> GenericVector;
+
+.. cpp:type:: List
+
+   ::
+
+      typedef Vector<VECSXP> List;
+
+.. cpp:type:: ExpressionVector
+
+   ::
+
+      typedef Vector<EXPRSXP> ExpressionVector;
+
 
 Public Member Functions
 -------------------------
@@ -29,7 +102,14 @@ Constructors
 
 .. cpp:function:: Vector(const no_init& obj)
 
-   ???
+   Create a vector without initializating the values. An example:
+   
+   .. code-block:: cpp
+      
+      SEXP noinit()
+      {
+          return Rcpp::NumericVector(Rcpp::no_init(10));
+      }
 
 .. cpp:function:: Vector(const int& size, const stored_type& u)
 
