@@ -115,14 +115,6 @@ Constructors
 
    Create a vector of length *size*, and fill it with value *u*.
 
-.. cpp:function:: Vector(const std::string& st)
-
-   ???
-
-.. cpp:function:: Vector(const char* st)
-
-   ???
-
 .. cpp:function:: Vector(const int& size, Func gen)
 
    - *size*: length of the vector.
