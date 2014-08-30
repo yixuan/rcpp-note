@@ -21,6 +21,14 @@ Constructors
 
    Copy constructor. Resulting object will share the SEXP data with *other*.
 
+::
+
+   template <typename Proxy>
+
+.. cpp:function:: Environment(const GenericProxy<Proxy>& proxy)
+
+   Create object from a proxy, such as attribute, slot, field, etc.
+
 .. cpp:function:: Environment(SEXP x)
 
    Wrap a given environment.

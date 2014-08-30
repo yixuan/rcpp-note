@@ -17,6 +17,14 @@ Constructors
 
    Copy constructor. Resulting object will share the SEXP data with *other*.
 
+::
+
+   template <typename Proxy>
+
+.. cpp:function:: Reference(const GenericProxy<Proxy>& proxy)
+
+   Create object from a proxy, such as attribute, slot, field, etc.
+
 .. cpp:function:: Reference(SEXP x)
 
    Wrap a given RC object.
