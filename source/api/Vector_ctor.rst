@@ -59,7 +59,8 @@ Constructors
       double f() { return 2.0; }
       SEXP vec2()
       {
-          return NumericVector(10, f);
+          // a vector of length 10 filled with 2.0
+          return Rcpp::NumericVector(10, f);
       }
 
 .. cpp:function:: Vector(const int& size)
@@ -69,7 +70,16 @@ Constructors
 .. cpp:function:: Vector(const Dimension& dims)
 
    Create a vector with the given dimension, and fill it with zeros. The **Dimension**
-   class is defined in ``<Rcpp/Dimension.h>``.
+   class is defined in ``<Rcpp/Dimension.h>``. An example:
+   
+   .. code-block:: cpp
+      
+      SEXP array3d()
+      {
+          Rcpp::Dimension dim(2, 3, 4);
+          // a 2x3x4 array
+          return Rcpp::NumericVector(dim);
+      }
 
 ``template <typename U>``
 
@@ -106,6 +116,16 @@ Constructors
      stored_type **gen**\(U1)
 
    Create a vector of length *siz*, and fill it with the function call ``gen(u1)``.
+   An example:
+   
+   .. code-block:: cpp
+      
+      SEXP my_rexp()
+      {
+          Rcpp::RNGScope scp;
+          // 10 exponential random numbers of mean 1
+          return Rcpp::NumericVector(10, R::rexp, 1.0);
+      }
 
 ``template <typename U1, typename U2>``
 
@@ -116,6 +136,16 @@ Constructors
      stored_type **gen**\(U1, U2)
 
    Create a vector of length *siz*, and fill it with the function call ``gen(u1, u2)``.
+   An example:
+   
+   .. code-block:: cpp
+      
+      SEXP my_rnorm()
+      {
+          Rcpp::RNGScope scp;
+          // 10 normal random numbers of mean 1 and sd 0.5
+          return Rcpp::NumericVector(10, R::rnorm, 1.0, 0.5);
+      }
 
 ``template <typename U1, typename U2, typename U3>``
 
@@ -132,6 +162,15 @@ Constructors
 .. cpp:function:: Vector(InputIterator first, InputIterator last)
 
    Copy the data between iterators *first* and *last* to the created vector.
+   An example:
+   
+   .. code-block:: cpp
+      
+      SEXP copy_vec()
+      {
+          double src[] = {1.0, 2.0, 3.0, 4.0, 5.0};
+          return Rcpp::NumericVector(src, src + 5);
+      }
 
 ``template <typename InputIterator>``
 
@@ -139,7 +178,16 @@ Constructors
 
    Create a vector of length *n*, and copy the data between iterators *first* and *last*
    to the created vector. *n* should be greater than or equal to the distance betwen
-   *first* and *last*.
+   *first* and *last*. An example:
+   
+   .. code-block:: cpp
+      
+      SEXP copy_vec2()
+      {
+          double src[] = {1.0, 2.0, 3.0, 4.0, 5.0};
+          // last five values are uninitialized
+          return Rcpp::NumericVector(src, src + 5, 10);
+      }
 
 ``template <typename InputIterator, typename Func>``
 
@@ -149,7 +197,16 @@ Constructors
      **InputIterator**, and returns a number convertible to the type of the vector.
    
    Apply function *func* to each element in the range [*first*, *last*),
-   and use the resulting values to create the vector.
+   and use the resulting values to create the vector. An example:
+   
+   .. code-block:: cpp
+      
+      double dsqrt(double x) { return sqrt(x); }
+      SEXP sqrt_init()
+      {
+          double src[] = {1.0, 2.0, 3.0, 4.0, 5.0};
+          return Rcpp::NumericVector(src, src + 5, dsqrt);
+      }
 
 ``template <typename InputIterator, typename Func>``
 
