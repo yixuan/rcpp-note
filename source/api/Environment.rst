@@ -21,9 +21,7 @@ Constructors
 
    Copy constructor. Resulting object will share the SEXP data with *other*.
 
-::
-
-   template <typename Proxy>
+``template <typename Proxy>``
 
 .. cpp:function:: Environment(const GenericProxy<Proxy>& proxy)
 
@@ -70,9 +68,7 @@ Defined in **Environment**
    Attemp to assign *x* to *name* in this environment. Return ``true`` if the assignment
    is successful, and throw an error if the binding is locked.
 
-::
-
-  template <typename WRAPPABLE>
+``template <typename WRAPPABLE>``
 
 .. cpp:function:: bool assign(const std::string& name, const WRAPPABLE x) const
 

@@ -17,9 +17,7 @@ Constructors
 
    Copy constructor. Resulting object will share the SEXP data with *other*.
 
-::
-
-   template <typename Proxy>
+``template <typename Proxy>``
 
 .. cpp:function:: Reference(const GenericProxy<Proxy>& proxy)
 

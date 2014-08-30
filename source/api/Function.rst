@@ -14,9 +14,7 @@ Constructors
 
    Copy constructor. Resulting object will share the SEXP data with *other*.
 
-::
-
-   template <typename Proxy>
+``template <typename Proxy>``
 
 .. cpp:function:: Function(const GenericProxy<Proxy>& proxy)
 
@@ -47,25 +45,19 @@ Defined in **Function**
 
    Call the function with no argument.
 
-::
-   
-   template <typename T1>
+``template <typename T1>``
 
 .. cpp:function:: SEXP operator()(const T1& t1) const
 
    Call the function with argument *t1*.
 
-::
-   
-   template <typename T1, typename T2>
+``template <typename T1, typename T2>``
 
 .. cpp:function:: SEXP operator()(const T1& t1, const T2& t2) const
 
    Call the function with arguments *t1* and *t2*.
 
-::
-   
-   template <...>
+``template <...>``
 
 .. cpp:function:: SEXP operator()(...) const
 

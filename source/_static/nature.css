@@ -256,3 +256,7 @@ div.viewcode-block:target {
     border-top: 1px solid #ac9;
     border-bottom: 1px solid #ac9;
 }
+
+dl {
+    border-bottom: 1px solid #C6C9CB;
+}
