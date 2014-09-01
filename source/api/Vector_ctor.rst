@@ -265,6 +265,8 @@ Constructors
           return Rcpp::NumericVector(src, src + 5, 10);
       }
 
+.. _ctor-trans:
+
 ``template <typename InputIterator, typename Func>``
 
 .. cpp:function:: Vector(InputIterator first, InputIterator last, Func func)
