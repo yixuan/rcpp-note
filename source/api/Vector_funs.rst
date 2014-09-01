@@ -196,10 +196,100 @@ An example for the four functions above:
        return x; // c(nine = 9, 2, 1, ten = 10)
    }
 
+::
 
+   template <typename T>
 
+.. cpp:function:: iterator insert(iterator position, const T& object)
 
+   Insert new element *object* before the element pointed to by *position*.
+   Return the pointer to the newly added element.
 
+::
+
+   template <typename T>
+
+.. cpp:function:: iterator insert(int position, const T& object)
+
+   Insert new element *object* before the *position*-th element (0-based).
+   Return the pointer to the newly added element.
+   
+   .. code-block:: cpp
+      
+      SEXP vector_insert()
+      {
+          Rcpp::NumericVector x(1);
+          double *iter = x.begin();
+          iter = x.insert(iter, 2);
+          x.insert(iter, 3);
+          x.insert(1, 2.5);
+          return x; // c(3, 2.5, 2, 0)
+      }
+
+.. cpp:function:: iterator erase(int position)
+
+   Remove the *position*-th element (0-based).
+   Return the pointer to the new location of the element that followed the
+   erased element.
+
+.. cpp:function:: iterator erase(iterator position)
+
+   Remove the element pointed to by *position*.
+   Return the pointer to the new location of the element that followed the
+   erased element.
+
+.. cpp:function:: iterator erase(int first, int last)
+
+   Remove the elements in the range [*first*, *last*).
+   Return the pointer to the new location of the element that followed the
+   last erased element.
+
+.. cpp:function:: iterator erase(iterator first, iterator last)
+
+   Remove the elements in the range [*first*, *last*).
+   Return the pointer to the new location of the element that followed the
+   last erased element.
+   
+   .. code-block:: cpp
+      
+      SEXP vector_erase()
+      {
+          using namespace Rcpp;
+          NumericVector x = NumericVector::create(1, 2, 3, 4, 5, 6, 7);
+          double *iter = x.begin();
+          x.erase(iter + 1, iter + 3); // remove 2 and 3
+          // now x becomes c(1, 4, 5, 6, 7)
+          x.erase(3, 5); // remove 6 and 7
+          return x; // c(1, 4, 5)
+      }
+
+.. cpp:function:: bool containsElementNamed(const char* target) const
+
+   Whether this vector contains an element with the target name.
+
+.. cpp:function:: int findName(const std::string& name) const
+
+   Find the index of the element whose name is *name* in the vector.
+
+.. cpp:function:: SEXP eval() const
+
+   Evaluate the vector in global environment. It may only make sense for **ExpressionVector**.
+
+.. cpp:function:: SEXP eval(SEXP env) const
+
+   Evaluate the vector in the environment given by *env*. It may only make sense for **ExpressionVector**.
+
+Inherited from **NamesProxyPolicy**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. cpp:function:: NamesProxy names()
+
+   Extract the names of this vector. This can appear in
+   the left hand side of assignment.
+
+.. cpp:function:: const_NamesProxy names() const
+
+   Extract the names of this vector. Read-only.
 
 Inherited from other classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -233,8 +323,25 @@ Static Public Member Functions
 
    A direct call to :ref:`Vector(InputIterator first, InputIterator last, Func func) <ctor-trans>`.
 
+.. cpp:function:: static Vector create()
 
+   Create a vector of zero length.
 
+``template <typename T1>``
 
+.. cpp:function:: static Vector create(const T1& t1)
 
+   Create a vector containing element *t1*.
+
+``template <typename T1, typename T2>``
+
+.. cpp:function:: static Vector create(const T1& t1, const T2& t2)
+
+   Create a vector containing elements *t1* and *t2*.
+
+``template <...>``
+
+.. cpp:function:: static Vector create(...)
+
+   Create a vector containing the arguments passed in, up to 20 elements.
 
