@@ -132,6 +132,74 @@ Defined  in **Vector**
 
    Sort the vector in place in increasing order, and return the sorted vector.
 
+::
+
+   template <typename InputIterator>
+
+.. cpp:function:: void assign(InputIterator first, InputIterator last)
+
+   Copy and assign the data between *first* and *last* to this vector. An example:
+   
+   .. code-block:: cpp
+   
+      SEXP test_assign()
+      {
+          Rcpp::NumericVector x(10); // originally of length 10
+          double src[] = {1, 2, 3};
+          x.assign(src, src + 3);
+          return x; // now becomes c(1, 2, 3)
+      }
+
+::
+
+   template <typename T>
+
+.. cpp:function:: void push_back(const T& object)
+
+   Append a new element *object* to this vector.
+
+::
+
+   template <typename T>
+
+.. cpp:function:: void push_back(const T& object, const std::string& name)
+
+   Append a new element *object* with name *name* to this vector.
+
+::
+
+   template <typename T>
+
+.. cpp:function:: void push_front(const T& object)
+
+   Add a new element *object* to the front of this vector.
+
+::
+
+   template <typename T>
+
+.. cpp:function:: void push_back(const T& object, const std::string& name)
+
+   Add a new element *object* with name *name* to the front of this vector.
+
+An example for the four functions above:
+
+.. code-block:: cpp
+
+   SEXP add_element()
+   {
+       Rcpp::NumericVector x(0);
+       x.push_back(1);
+       x.push_back(10, "ten");
+       x.push_front(2);
+       x.push_front(9, "nine");
+       return x; // c(nine = 9, 2, 1, ten = 10)
+   }
+
+
+
+
+
 
 Inherited from other classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -148,6 +216,23 @@ Static Public Member Functions
 .. cpp:function:: static bool is_na(stored_type x)
 
    Test whether *x* is ``NA`` (of the proper type).
+
+::
+
+   template <typename InputIterator>
+
+.. cpp:function:: static Vector import(InputIterator first, InputIterator last)
+
+   Create a vector filled with the data between *first* and *last*.
+
+::
+
+   template <typename InputIterator, typename F>
+
+.. cpp:function:: static Vector import_transform(InputIterator first, InputIterator last, F f)
+
+   A direct call to :ref:`Vector(InputIterator first, InputIterator last, Func func) <ctor-trans>`.
+
 
 
 
