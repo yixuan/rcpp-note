@@ -53,6 +53,16 @@ html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+	mv $(BUILDDIR)/html/_sources $(BUILDDIR)/html/sources
+	mv $(BUILDDIR)/html/_static $(BUILDDIR)/html/static
+	sed -i "s/_static/static/g" $(BUILDDIR)/html/*.html
+	sed -i "s/_sources/sources/g" $(BUILDDIR)/html/*.html
+	sed -i "s/_static/static/g" $(BUILDDIR)/html/api/*.html
+	sed -i "s/_sources/sources/g" $(BUILDDIR)/html/api/*.html
+	sed -i "s/_static/static/g" $(BUILDDIR)/html/static/*.js
+	sed -i "s/_sources/sources/g" $(BUILDDIR)/html/static/*.js
+	sed -i "s/_static/static/g" $(BUILDDIR)/html/static/*.css
+	sed -i "s/_sources/sources/g" $(BUILDDIR)/html/static/*.css
 
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
