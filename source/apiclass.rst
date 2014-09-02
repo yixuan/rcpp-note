@@ -12,6 +12,7 @@ Rcpp code, so for clarity we may call them *API classes* of Rcpp.
    api/RObject
    api/Vector_ctor
    api/Vector_funs
+   api/Matrix
    api/Environment
    api/Function
    api/S4
