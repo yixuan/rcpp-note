@@ -115,6 +115,28 @@ Constructors
 
    Create a vector of length *size*, and fill it with value *u*.
 
+.. cpp:function:: Vector(const std::string& st)
+
+   Create a vector from a given string, as the example below shows:
+   
+   .. code-block:: cpp
+   
+      SEXP vector_ctor_string()
+      {
+          Rcpp::CharacterVector x = std::string("Hello");
+          return x; // a length one character vector
+      }
+   
+   .. warning::
+   
+      This constructor as well as the next one, are intended to work
+      on **CharacterVector**. Vectors of other types might encounter
+      errors with these constructors.
+
+.. cpp:function:: Vector(const char* st)
+
+   Ditto.
+
 .. cpp:function:: Vector(const int& size, Func gen)
 
    - *size*: length of the vector.
