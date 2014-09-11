@@ -112,6 +112,38 @@ Inherited from **SlotProxyPolicy**
 
    Whether this object has a slot given by *name*.
 
+An example for the functions above, using ``Rcpp::cppFunction``:
+
+.. code-block:: r
+
+   library(Rcpp)
+   cppFunction('
+   
+       SEXP obj_slot(SEXP obj)
+       {
+           using namespace Rcpp;
+           RObject robj(obj);
+           if(!robj.isS4())
+               return R_NilValue;
+           
+           if(robj.hasSlot("x"))
+           {
+               RObject x = robj.slot("x");
+               RObject x_original = clone(x);
+               robj.slot("x") = NumericVector(5); // a vector of length 5 filled with 0
+               return x_original;
+           }
+           
+           return R_NilValue;
+       }
+   
+   ')
+   
+   library(Matrix)
+   mat = Matrix(rnorm(4), 2)
+   obj_slot(mat)  ## return the original x slot
+   print(mat)     ## mat has been modified
+
 Inherited from **AttributeProxyPolicy**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -131,6 +163,24 @@ Inherited from **AttributeProxyPolicy**
 .. cpp:function:: bool hasAttribute(const std::string& name) const
 
    Whether this object has an attribute whose name is specified by *name*.
+
+An example for the functions above:
+
+.. code-block:: cpp
+
+   SEXP obj_attr()
+   {
+       using namespace Rcpp;
+       NumericMatrix mat = NumericMatrix::diag(4, 1.0);
+       IntegerVector mat_dim = mat.attr("dim");
+       mat.attr("new_attr") = "some value";
+       std::vector<std::string> attr_names = mat.attributeNames();
+       bool has_attr = mat.hasAttribute("new_attr");
+       return List::create(Named("mat") = mat,
+                           Named("mat_dim") = mat_dim,
+                           Named("attr_names") = wrap(attr_names),
+                           Named("has_attr") = wrap(has_attr));
+   }
 
 Inherited from **RObjectMethods**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,5 +233,29 @@ Inherited from **RObjectMethods**
    
    Whether this is an S4 object in R.
 
+An example for the functions above, using ``Rcpp::cppFunction``:
 
+.. code-block:: r
+
+   library(Rcpp)
+   cppFunction('
+   
+       SEXP obj_info(SEXP obj)
+       {
+           using namespace Rcpp;
+           RObject robj(obj);
+           return List::create(Named("is_null") = wrap(robj.isNULL()),
+                               Named("type") = wrap(robj.sexp_type()),
+                               Named("has_class") = wrap(robj.isObject()),
+                               Named("is_S4") = wrap(robj.isS4()));
+       }
+   
+   ')
+   
+   obj_info(NULL)    ## NULL
+   obj_info(y ~ x)   ## formula
+   
+   setRefClass("Myclass", fields = list(data = "list"))
+   rc = new("Myclass")
+   obj_info(rc)      ## Reference class is S4
 
