@@ -92,7 +92,7 @@ Constructors
 
 .. cpp:function:: Vector(SEXP x)
 
-   Wrap a given vector. A type conversion will be conducted if types don't match.
+   Wrap a given vector. A type conversion will be conducted if types do not match.
 
 ``template <typename Proxy>``
 
@@ -104,16 +104,35 @@ Constructors
 
    Create a vector without initializating the values. An example:
    
-   .. code-block:: cpp
+   .. code-block:: r
       
-      SEXP noinit()
-      {
-          return Rcpp::NumericVector(Rcpp::no_init(10));
-      }
+      library(Rcpp)
+      evalCpp("NumericVector(Rcpp::no_init(10))")
+      ## [1] 3.458460e-323 6.946245e-310 4.940656e-324 6.946245e-310 9.881313e-324
+      ## [6] 6.946245e-310 6.946245e-310  0.000000e+00 6.946245e-310  0.000000e+00
 
 .. cpp:function:: Vector(const int& size, const stored_type& u)
 
    Create a vector of length *size*, and fill it with value *u*.
+
+   .. code-block:: r
+      
+      library(Rcpp)
+      evalCpp("NumericVector(10, 2.0)")
+      ## [1] 2 2 2 2 2 2 2 2 2 2
+
+``template <typename U>``
+
+.. cpp:function:: Vector(const int& size, const U& u)
+
+   Create a vector of length *size*, and fill it with value *u*. Type will
+   be converted if necessary.
+
+   .. code-block:: r
+      
+      library(Rcpp)
+      evalCpp("IntegerVector(10, 2.1)")  ## type conversion
+      ## [1] 2 2 2 2 2 2 2 2 2 2
 
 .. cpp:function:: Vector(const std::string& st)
 
@@ -121,11 +140,20 @@ Constructors
    
    .. code-block:: cpp
    
-      SEXP vector_ctor_string()
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex_Vector_string()
       {
-          Rcpp::CharacterVector x = std::string("Hello");
-          return x; // a length one character vector
+          CharacterVector x(std::string("Hello"));
+          return x; // a length-one character vector
       }
+
+      /*** R
+      ex_Vector_string()
+      ## [1] "Hello"
+      */
    
    .. warning::
    
@@ -137,43 +165,62 @@ Constructors
 
    Ditto.
 
-.. cpp:function:: Vector(const int& size, Func gen)
-
-   - *size*: length of the vector.
-   - *gen*: a function that takes no argument and returns a number of the 
-     same type of the vector, with the signature
-     
-     stored_type **gen**\()
-   
-   Create a vector of length *size*, and use function *gen* to fill the elements.
-   An example:
-
-   .. code-block:: cpp
-   
-      double f() { return 2.0; }
-      SEXP vec2()
-      {
-          // a vector of length 10 filled with 2.0
-          return Rcpp::NumericVector(10, f);
-      }
-
 .. cpp:function:: Vector(const int& size)
 
    Create a vector of length *size*, and fill it with zeros (of the proper type).
 
+   .. code-block:: r
+      
+      library(Rcpp)
+      evalCpp("NumericVector(10)")
+      ## [1] 0 0 0 0 0 0 0 0 0 0
+
 .. cpp:function:: Vector(const Dimension& dims)
 
    Create a vector with the given dimension, and fill it with zeros. The **Dimension**
-   class is defined in ``<Rcpp/Dimension.h>``. An example:
+   class is defined in ``<Rcpp/Dimension.h>``.
    
    .. code-block:: cpp
-      
-      SEXP array3d()
+   
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex1_Vector_dims()
       {
-          Rcpp::Dimension dim(2, 3, 4);
+          Dimension dim(2, 3, 4);
           // a 2x3x4 array
-          return Rcpp::NumericVector(dim);
+          return NumericVector(dim);
       }
+
+      /*** R
+      ex1_Vector_dims()
+
+      ## , , 1
+      ## 
+      ##      [,1] [,2] [,3]
+      ## [1,]    0    0    0
+      ## [2,]    0    0    0
+      ## 
+      ## , , 2
+      ## 
+      ##      [,1] [,2] [,3]
+      ## [1,]    0    0    0
+      ## [2,]    0    0    0
+      ## 
+      ## , , 3
+      ## 
+      ##      [,1] [,2] [,3]
+      ## [1,]    0    0    0
+      ## [2,]    0    0    0
+      ## 
+      ## , , 4
+      ## 
+      ##      [,1] [,2] [,3]
+      ## [1,]    0    0    0
+      ## [2,]    0    0    0
+
+      */
 
 ``template <typename U>``
 
@@ -181,6 +228,36 @@ Constructors
 
    Create a vector with the given dimension, and fill it with value *u*. Type will
    be converted if necessary.
+
+   .. code-block:: cpp
+   
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex2_Vector_dims()
+      {
+          Dimension dim(2, 2, 2);
+          // a 2x2x2 array filled with 1
+          return NumericVector(dim, 1.0);
+      }
+
+      /*** R
+      ex2_Vector_dims()
+
+      ## , , 1
+      ## 
+      ##      [,1] [,2]
+      ## [1,]    1    1
+      ## [2,]    1    1
+      ## 
+      ## , , 2
+      ## 
+      ##      [,1] [,2]
+      ## [1,]    1    1
+      ## [2,]    1    1
+
+      */
 
 ``template <bool NA, typename VEC>``
 
@@ -191,19 +268,56 @@ Constructors
    and copied to the created vector. If *other* is actually a vector of the same element type,
    this function is equivalent to a copy constructor.
 
-``template <typename U>``
-
-.. cpp:function:: Vector(const int& size, const U& u)
-
-   Create a vector of length *size*, and fill it with value *u*. Type will
-   be converted if necessary.
-
 ``template <bool NA, typename T>``
 
 .. cpp:function:: Vector(const sugar::SingleLogicalResult<NA, T>& obj)
 
    Create a vector of length 1 from an object of class **SingleLogicalResult**, usually the result
    returned by ``Rcpp::all()`` or ``Rcpp::any()``.
+
+   .. code-block:: cpp
+   
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex_Vector_slr()
+      {
+          IntegerVector v(5, 2); // length 5, filled with 2
+          return LogicalVector(all(v > 1));
+      }
+
+      /*** R
+      ex_Vector_slr() ## TRUE
+      */
+
+.. cpp:function:: Vector(const int& size, Func gen)
+
+   - *size*: length of the vector.
+   - *gen*: a function that takes no argument and returns a number of the 
+     same type of the vector, with the signature
+     
+     stored_type **gen**\()
+   
+   Create a vector of length *size*, and use function *gen* to fill the elements.
+
+   .. code-block:: cpp
+   
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      double f() { return 2.0; }
+      // [[Rcpp::export]]
+      RObject ex0_Vector_gen()
+      {
+          // a vector of length 10 filled with 2.0
+          return NumericVector(10, f);
+      }
+
+      /*** R
+      ex0_Vector_gen()
+      ## [1] 2 2 2 2 2 2 2 2 2 2
+      */
 
 ``template <typename U1>``
 
@@ -214,16 +328,25 @@ Constructors
      stored_type **gen**\(U1)
 
    Create a vector of length *siz*, and fill it with the function call ``gen(u1)``.
-   An example:
-   
+
    .. code-block:: cpp
-      
-      SEXP my_rexp()
+   
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex1_Vector_gen()
       {
           Rcpp::RNGScope scp;
-          // 10 exponential random numbers of mean 1
-          return Rcpp::NumericVector(10, R::rexp, 1.0);
+          // 5 exponential random numbers of mean 1
+          return NumericVector(5, R::rexp, 1.0);
       }
+
+      /*** R
+      set.seed(123)
+      ex1_Vector_gen()
+      ## [1] 0.84345726 0.57661027 1.32905487 0.03157736 0.05621098
+      */
 
 ``template <typename U1, typename U2>``
 
@@ -234,16 +357,25 @@ Constructors
      stored_type **gen**\(U1, U2)
 
    Create a vector of length *siz*, and fill it with the function call ``gen(u1, u2)``.
-   An example:
-   
+
    .. code-block:: cpp
-      
-      SEXP my_rnorm()
+   
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex2_Vector_gen()
       {
           Rcpp::RNGScope scp;
-          // 10 normal random numbers of mean 1 and sd 0.5
-          return Rcpp::NumericVector(10, R::rnorm, 1.0, 0.5);
+          // 5 exponential random numbers of mean 1 and sd 0.5
+          return NumericVector(5, R::rnorm, 1.0, 0.5);
       }
+
+      /*** R
+      set.seed(123)
+      ex2_Vector_gen()
+      ## [1] 0.7197622 0.8849113 1.7793542 1.0352542 1.0646439
+      */
 
 ``template <typename U1, typename U2, typename U3>``
 
@@ -261,14 +393,23 @@ Constructors
 
    Copy the data between iterators *first* and *last* to the created vector.
    An example:
-   
+
    .. code-block:: cpp
-      
-      SEXP copy_vec()
+   
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex1_Vector_input()
       {
           double src[] = {1.0, 2.0, 3.0, 4.0, 5.0};
-          return Rcpp::NumericVector(src, src + 5);
+          return NumericVector(src, src + 5);
       }
+
+      /*** R
+      ex1_Vector_input()
+      ## [1] 1 2 3 4 5
+      */
 
 ``template <typename InputIterator>``
 
@@ -276,16 +417,26 @@ Constructors
 
    Create a vector of length *n*, and copy the data between iterators *first* and *last*
    to the created vector. *n* should be greater than or equal to the distance betwen
-   *first* and *last*. An example:
-   
+   *first* and *last*.
+
    .. code-block:: cpp
-      
-      SEXP copy_vec2()
+   
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex2_Vector_input()
       {
           double src[] = {1.0, 2.0, 3.0, 4.0, 5.0};
-          // last five values are uninitialized
-          return Rcpp::NumericVector(src, src + 5, 10);
+          // last three values are uninitialized
+          return NumericVector(src, src + 5, 8);
       }
+
+      /*** R
+      ex2_Vector_input()
+      ## [1]  1.000000e+00  2.000000e+00  3.000000e+00  4.000000e+00  5.000000e+00
+      ## [6] 2.121996e-314 6.365987e-314           NaN
+      */
 
 .. _ctor-trans:
 
@@ -297,16 +448,24 @@ Constructors
      **InputIterator**, and returns a number convertible to the type of the vector.
    
    Apply function *func* to each element in the range [*first*, *last*),
-   and use the resulting values to create the vector. An example:
-   
+   and use the resulting values to create the vector.
+
    .. code-block:: cpp
-      
-      double dsqrt(double x) { return sqrt(x); }
-      SEXP sqrt_init()
+   
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex3_Vector_input()
       {
-          double src[] = {1.0, 2.0, 3.0, 4.0, 5.0};
-          return Rcpp::NumericVector(src, src + 5, dsqrt);
+          double src[] = {-1.0, 2.0, -3.0, -4.0, 5.0};
+          return NumericVector(src, src + 5, fabs);
       }
+
+      /*** R
+      ex3_Vector_input()
+      ## [1] 1 2 3 4 5
+      */
 
 ``template <typename InputIterator, typename Func>``
 
