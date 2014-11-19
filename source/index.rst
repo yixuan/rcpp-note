@@ -1,4 +1,4 @@
-Welcome to Rcpp Notes!
+Welcome to Rcpp Note!
 =====================================
 
 This project is an **unofficial** documentation of `Rcpp <http://www.rcpp.org/>`_,
