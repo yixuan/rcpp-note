@@ -84,8 +84,36 @@ Inherited from **PreserveStorage**
 
 .. cpp:function:: bool inherits(const char* clazz)
 
-   Test whether this object inherits from a given class. Equivalent to the
-   R function ``inherits()``.
+   Test whether this object inherits from a given class. Note that it is **NOT**
+   applicable to atomic types (e.g. ``numeric``, ``character``, ``list`` etc.)
+
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      bool ex1_inherits(RObject x)
+      {
+          return x.inherits("numeric");
+      }
+
+      // [[Rcpp::export]]
+      bool ex2_inherits(RObject x)
+      {
+          return x.inherits("myclass");
+      }
+
+      /*** R
+
+      val = 2.0
+      ex1_inherits(val)  ## FALSE
+      ex2_inherits(val)  ## FALSE
+
+      class(val) = "myclass"
+      ex2_inherits(val)  ## TRUE
+
+      */
 
 .. cpp:function:: operator SEXP() const
 
@@ -104,45 +132,94 @@ Inherited from **SlotProxyPolicy**
    Extract the object in slot specified by *name*. This can appear in
    the left hand side of assignment.
 
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex_slot_set(RObject x)
+      {
+          x.slot("x") = NumericVector(4);
+          return wrap("x field modified");
+      }
+
+      /*** R
+      
+      set.seed(123)
+      m = Matrix::Matrix(rnorm(4), 2)
+      print(m)
+
+      ## 2 x 2 Matrix of class "dgeMatrix"
+      ##            [,1]       [,2]
+      ## [1,] -0.5604756 1.55870831
+      ## [2,] -0.2301775 0.07050839
+
+      ex_slot_set(m)
+      print(m)
+
+      ## 2 x 2 Matrix of class "dgeMatrix"
+      ##      [,1] [,2]
+      ## [1,]    0    0
+      ## [2,]    0    0
+
+      */
+
 .. cpp:function:: const_SlotProxy slot(const std::string& name) const
 
    Extract the object in slot specified by *name*. Read-only.
+
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex_slot_get(RObject x)
+      {
+          return x.slot("x");
+      }
+
+      /*** R
+      
+      set.seed(123)
+      m = Matrix::Matrix(rnorm(4), 2)
+      print(m)
+
+      ## 2 x 2 Matrix of class "dgeMatrix"
+      ##            [,1]       [,2]
+      ## [1,] -0.5604756 1.55870831
+      ## [2,] -0.2301775 0.07050839
+
+      ex_slot_get(m)
+
+      ## [1] -0.56047565 -0.23017749  1.55870831  0.07050839
+
+      */
 
 .. cpp:function:: bool hasSlot(const std::string& name) const
 
    Whether this object has a slot given by *name*.
 
-An example for the functions above, using ``Rcpp::cppFunction``:
+   .. code-block:: cpp
 
-.. code-block:: r
+      #include <Rcpp.h>
+      using namespace Rcpp;
 
-   library(Rcpp)
-   cppFunction('
-   
-       SEXP obj_slot(SEXP obj)
-       {
-           using namespace Rcpp;
-           RObject robj(obj);
-           if(!robj.isS4())
-               return R_NilValue;
-           
-           if(robj.hasSlot("x"))
-           {
-               RObject x = robj.slot("x");
-               RObject x_original = clone(x);
-               robj.slot("x") = NumericVector(5); // a vector of length 5 filled with 0
-               return x_original;
-           }
-           
-           return R_NilValue;
-       }
-   
-   ')
-   
-   library(Matrix)
-   mat = Matrix(rnorm(4), 2)
-   obj_slot(mat)  ## return the original x slot
-   print(mat)     ## mat has been modified
+      // [[Rcpp::export]]
+      bool ex_hasSlot(RObject x)
+      {
+          return x.hasSlot("x");
+      }
+
+      /*** R
+      
+      set.seed(123)
+      m = Matrix::Matrix(rnorm(4), 2)
+      ex_hasSlot(m)    ## TRUE
+      ex_hasSlot(2.0)  ## error, not an S4
+
+      */
 
 Inherited from **AttributeProxyPolicy**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,35 +229,101 @@ Inherited from **AttributeProxyPolicy**
    Extract the object asscociated with attribute *name*. This can appear in
    the left hand side of assignment.
 
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex_attr_set(RObject x)
+      {
+          x.attr("new_attr") = "some value";
+          return wrap("new attribute has been set");
+      }
+
+      /*** R
+      
+      x = 1
+      ex_attr_set(x)
+      print(x)
+
+      ## [1] 1
+      ## attr(,"new_attr")
+      ## [1] "some value"
+
+      */
+
 .. cpp:function:: const_AttributeProxy attr(const std::string& name) const
 
    Extract the object asscociated with attribute *name*. Read-only.
+
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      RObject ex_attr_get(RObject x)
+      {
+          return x.attr("dim");
+      }
+
+      /*** R
+      
+      m = matrix(0, 2, 2)
+      ex_attr_get(m)
+
+      ## [1] 2 2
+
+      */
 
 .. cpp:function:: std::vector<std::string> attributeNames() const
    
    Return the attribute names of this object.
 
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+
+      // [[Rcpp::export]]
+      std::vector<std::string> ex_attributeNames(RObject x)
+      {
+          x.attr("some_attr") = "some value";
+          return x.attributeNames();
+      }
+
+      /*** R
+      
+      m = matrix(0, 2, 2)
+      ex_attributeNames(m)
+
+      ## [1] "dim"       "some_attr"
+
+      */
+
 .. cpp:function:: bool hasAttribute(const std::string& name) const
 
    Whether this object has an attribute whose name is specified by *name*.
 
-An example for the functions above:
+   .. code-block:: cpp
 
-.. code-block:: cpp
+      #include <Rcpp.h>
+      using namespace Rcpp;
 
-   SEXP obj_attr()
-   {
-       using namespace Rcpp;
-       NumericMatrix mat = NumericMatrix::diag(4, 1.0);
-       IntegerVector mat_dim = mat.attr("dim");
-       mat.attr("new_attr") = "some value";
-       std::vector<std::string> attr_names = mat.attributeNames();
-       bool has_attr = mat.hasAttribute("new_attr");
-       return List::create(Named("mat") = mat,
-                           Named("mat_dim") = mat_dim,
-                           Named("attr_names") = wrap(attr_names),
-                           Named("has_attr") = wrap(has_attr));
-   }
+      // [[Rcpp::export]]
+      bool ex_hasAttribute(RObject x)
+      {
+          return x.hasAttribute("dim");
+      }
+
+      /*** R
+      
+      m = matrix(0, 2, 2)
+      ex_hasAttribute(m)    ## TRUE
+      ex_hasAttribute(0.2)  ## FALSE
+
+      */
 
 Inherited from **RObjectMethods**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -195,7 +338,7 @@ Inherited from **RObjectMethods**
 
    .. code-block:: cpp
    
-      typedef enum {
+      enum {
           NILSXP      = 0,    /* nil = NULL */
           SYMSXP      = 1,    /* symbols */
           LISTSXP     = 2,    /* lists of dotted pairs */
@@ -223,7 +366,7 @@ Inherited from **RObjectMethods**
           NEWSXP      = 30,   /* fresh node creaed in new page */
           FREESXP     = 31,   /* node released by GC */
           FUNSXP      = 99    /* Closure or Builtin */
-      } SEXPTYPE;
+      };
 
 .. cpp:function:: bool isObject() const
    
@@ -233,29 +376,66 @@ Inherited from **RObjectMethods**
    
    Whether this is an S4 object in R.
 
-An example for the functions above, using ``Rcpp::cppFunction``:
+An example for the functions above:
 
-.. code-block:: r
+.. code-block:: cpp
 
-   library(Rcpp)
-   cppFunction('
+   #include <Rcpp.h>
+   using namespace Rcpp;
    
-       SEXP obj_info(SEXP obj)
-       {
-           using namespace Rcpp;
-           RObject robj(obj);
-           return List::create(Named("is_null") = wrap(robj.isNULL()),
-                               Named("type") = wrap(robj.sexp_type()),
-                               Named("has_class") = wrap(robj.isObject()),
-                               Named("is_S4") = wrap(robj.isS4()));
-       }
-   
-   ')
-   
-   obj_info(NULL)    ## NULL
-   obj_info(y ~ x)   ## formula
+   // [[Rcpp::export]]
+   List ex_RObjectMethods(RObject robj)
+   {
+       return List::create(Named("is_null") = wrap(robj.isNULL()),
+                           Named("type") = wrap(robj.sexp_type()),
+                           Named("has_class") = wrap(robj.isObject()),
+                           Named("is_S4") = wrap(robj.isS4()));
+   }
+
+   /*** R
+
+   ex_RObjectMethods(NULL)
+
+   ## $is_null
+   ## [1] TRUE
+   ## 
+   ## $type
+   ## [1] 0
+   ## 
+   ## $has_class
+   ## [1] FALSE
+   ## 
+   ## $is_S4
+   ## [1] FALSE
+
+   ex_RObjectMethods(y ~ x)
+
+   ## $is_null
+   ## [1] FALSE
+   ## 
+   ## $type
+   ## [1] 6
+   ## 
+   ## $has_class
+   ## [1] TRUE
+   ## 
+   ## $is_S4
+   ## [1] FALSE
    
    setRefClass("Myclass", fields = list(data = "list"))
    rc = new("Myclass")
-   obj_info(rc)      ## Reference class is S4
+   ex_RObjectMethods(rc)
 
+   ## $is_null
+   ## [1] FALSE
+   ## 
+   ## $type
+   ## [1] 25
+   ## 
+   ## $has_class
+   ## [1] TRUE
+   ## 
+   ## $is_S4
+   ## [1] TRUE
+
+   */
