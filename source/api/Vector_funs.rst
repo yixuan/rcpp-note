@@ -11,6 +11,23 @@ Defined  in **Vector**
 
    Return the length of the vector.
 
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      int ex_Vector_length(NumericVector x)
+      {
+          return x.length();
+      }
+      
+      /*** R
+      
+      ex_Vector_length(rnorm(5))  ## 5
+      
+      */      
+
 .. cpp:function:: R_len_t size() const
 
    Return the length of the vector, alias of ``length()``.
@@ -20,26 +37,73 @@ Defined  in **Vector**
    When this is actually a matrix, give the offset (i.e., the index) of the element
    in row *i* and column *j* (both 0-based).
 
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      int ex1_Vector_offset(NumericVector x, int i, int j)
+      {
+          return x.offset(i - 1, j - 1) + 1;
+      }
+      
+      /*** R
+      
+      set.seed(123)
+      m = matrix(rnorm(24), 4, 6)
+      ex1_Vector_offset(m, 2, 4)  ## 14
+      m[2, 4]  ## 0.110682
+      m[ex1_Vector_offset(m, 2, 4)]  ## 0.110682
+      
+      */
+
 .. cpp:function:: size_t offset(const size_t& i) const
    
-   Give the offset of the *i*-th element with bound check.
+   Give the offset of the *i*-th element with bound check. 0-based.
+
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      int ex2_Vector_offset(NumericVector x, int i)
+      {
+          return x.offset(i);
+      }
+      
+      /*** R
+      
+      v = c(10, 20, 30)
+      ex2_Vector_offset(v, 1)  ## 1
+      ex2_Vector_offset(v, 3)  ## index out of bounds error
+      
+      */
 
 .. cpp:function:: size_t offset(const std::string& name) const
 
-   Give the offset of the element whose name is *name* in the vector. An example:
+   Give the offset of the element whose name is *name* in the vector. 0-based.
    
    .. code-block:: cpp
    
-      SEXP test_offset()
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      int ex3_Vector_offset(NumericVector x)
       {
-          using namespace Rcpp;
-          NumericVector x = NumericVector::create(
-                                Named("a") = 1.0,
-                                Named("b") = 2.0,
-                                3.0
-                            );
-          return wrap(x.offset("b")); // should be 1
+          return x.offset("a");
       }
+      
+      /*** R
+      
+      v1 = c(a = 10, b = 20, 30)
+      ex3_Vector_offset(v1)  ## 0
+      v2 = c(c = 40, d = 50)
+      ex3_Vector_offset(v2)  ## index out of bounds error
+      
+      */
 
 ::
    
@@ -49,9 +113,55 @@ Defined  in **Vector**
 
    Fill the vector with value *u*.
 
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      RObject ex_Vector_fill(NumericVector x)
+      {
+          NumericVector xx = clone(x);
+          xx.fill(2.0);
+          return xx;
+      }
+      
+      /*** R
+      
+      v1 = c(2, 1, 3)
+      ex_Vector_fill(v1)
+      ## [1] 2 2 2
+      
+      */
+
 .. cpp:function:: iterator begin()
 
    Return an iterator pointing to the first element of the vector.
+
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      int ex_Vector_iterator(NumericVector x)
+      {
+          // another way to get the length of a vector
+          int len = std::distance(x.begin(), x.end());
+          // iterators can be casted to pointers
+          double *ptr = x.begin();
+          *ptr = 5.0;
+          return len;
+      }
+      
+      /*** R
+      
+      v = c(2, 1, 3)
+      ex_Vector_iterator(v)  ## 3
+      v
+      ## [1] 5 1 3
+      
+      */
 
 .. cpp:function:: iterator end()
 
@@ -70,6 +180,27 @@ Defined  in **Vector**
    Get the reference of the *i*-th element (0-based) of the vector **without**
    bound check.
 
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      double ex1_Vector_indexer(NumericVector x)
+      {
+          x[0] = 5.0;
+          return x[2];
+      }
+      
+      /*** R
+      
+      v = c(2, 1, 5)
+      ex1_Vector_indexer(v)  ## 5
+      v
+      ## [1] 5 1 5
+      
+      */
+
 .. cpp:function:: const_Proxy operator[](int i) const
 
    Get the *i*-th element of the vector **without** bound check. Read-only.
@@ -78,6 +209,27 @@ Defined  in **Vector**
    
    Get the reference of the *i*-th element of the vector **with**
    bound check.
+
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      double ex2_Vector_indexer(NumericVector x)
+      {
+          x(0) = 5.0;
+          return x(999);
+      }
+      
+      /*** R
+      
+      v = c(2, 1, 5)
+      ex2_Vector_indexer(v)  ## index out of bounds error
+      v
+      ## [1] 5 1 5
+      
+      */
    
 .. cpp:function:: const_Proxy operator()(const size_t& i) const
 
