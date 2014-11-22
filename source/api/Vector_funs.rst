@@ -239,14 +239,63 @@ Defined  in **Vector**
    
    When this is a matrix, get the reference of the element in row *i* and
    column *j* (both 0-based).
+
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      double ex3_Vector_indexer(NumericVector x)
+      {
+          x(0, 0) = 0.0;
+          return x(1, 1);
+      }
+      
+      /*** R
+      
+      v = matrix(as.numeric(1:9), 3, 3)
+      ex3_Vector_indexer(v)  ## 5
+      v
+      ##      [,1] [,2] [,3]
+      ## [1,]    0    4    7
+      ## [2,]    2    5    8
+      ## [3,]    3    6    9
+
+      ex3_Vector_indexer(as.numeric(v))  ## error: not a matrix
+      
+      */
    
 .. cpp:function:: const_Proxy operator()(const size_t& i, const size_t& j) const
 
-   When this is a matrix, get the the element in row *i* and column *j*.
+   When this is a matrix, get the the element in row *i* and column *j*
+   (both 0-based).
 
 .. cpp:function:: NameProxy operator[](const std::string& name)
    
    Get the reference of the element whose name is *name* in the vector.
+
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      double ex4_Vector_indexer(NumericVector x, std::string name)
+      {
+          x(name) = 0.0;
+          return x[name];  // same as x(name)
+      }
+      
+      /*** R
+      
+      v = c(a = 2, b = 1, 5)
+      ex4_Vector_indexer(v, "a")  ## 0
+      v
+      ## a b   
+      ## 0 1 5
+      
+      */
    
 .. cpp:function:: NameProxy operator()(const std::string& name)
 
@@ -454,6 +503,13 @@ Static Public Member Functions
 .. cpp:function:: static store_type get_na()
 
    Return ``NA`` of the same type as elements in the vector.
+
+   .. code-block:: r
+
+      library(Rcpp)
+      evalCpp("NumericVector::get_na()")
+      evalCpp("IntegerVector::get_na()")
+      evalCpp("List::get_na()")  ## will get NULL
 
 .. cpp:function:: static bool is_na(stored_type x)
 
