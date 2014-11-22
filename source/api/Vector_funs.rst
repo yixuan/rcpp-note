@@ -535,11 +535,21 @@ Static Public Member Functions
 
    Create a vector of zero length.
 
+   .. code-block:: r
+
+      library(Rcpp)
+      evalCpp("NumericVector::create()")  ## numeric(0)
+
 ``template <typename T1>``
 
 .. cpp:function:: static Vector create(const T1& t1)
 
-   Create a vector containing element *t1*.
+   Create a vector containing element *t1*. Type will be converted if needed.
+
+   .. code-block:: r
+
+      library(Rcpp)
+      evalCpp("IntegerVector::create(1.2)")  ## with type conversion
 
 ``template <typename T1, typename T2>``
 
@@ -547,9 +557,19 @@ Static Public Member Functions
 
    Create a vector containing elements *t1* and *t2*.
 
+   .. code-block:: r
+
+      library(Rcpp)
+      evalCpp('CharacterVector::create("hello", "universe")')
+
 ``template <...>``
 
 .. cpp:function:: static Vector create(...)
 
    Create a vector containing the arguments passed in, up to 20 elements.
+
+   .. code-block:: r
+
+      library(Rcpp)
+      evalCpp('List::create(1.2, NumericVector::create(1.0, 2.0, 2.1), "key")')
 
