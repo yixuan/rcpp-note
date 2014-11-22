@@ -515,6 +515,13 @@ Static Public Member Functions
 
    Test whether *x* is ``NA`` (of the proper type).
 
+   .. code-block:: r
+
+      library(Rcpp)
+      evalCpp("NumericVector::is_na(NA_REAL)")    ## TRUE
+      evalCpp("NumericVector::is_na(R_PosInf)")   ## FALSE
+      evalCpp("List::is_na(R_NilValue)")          ## FALSE (!!)
+
 ::
 
    template <typename InputIterator>
@@ -522,6 +529,25 @@ Static Public Member Functions
 .. cpp:function:: static Vector import(InputIterator first, InputIterator last)
 
    Create a vector filled with the data between *first* and *last*.
+
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      RObject ex_Vector_import()
+      {
+          double src[] = {1.0, 2.0, 3.0};
+          return NumericVector::import(src, src + 3);
+      }
+      
+      /*** R
+      
+      ex_Vector_import()
+      ## [1] 1 2 3
+      
+      */
 
 ::
 
