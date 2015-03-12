@@ -4,8 +4,8 @@ Vector (Member Functions)
 Public Member Functions
 -------------------------
 
-Defined  in **Vector**
-~~~~~~~~~~~~~~~~~~~~~~~
+Defined  in :cpp:class:`Vector`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. cpp:function:: R_len_t length() const
 
@@ -311,7 +311,7 @@ Defined  in **Vector**
 
 .. cpp:function:: operator RObject() const
    
-   Convert to **RObject** object.
+   Convert to :cpp:class:`RObject` object.
 
 ::
 
@@ -335,7 +335,7 @@ Defined  in **Vector**
    
    .. warning::
       
-      `sort()` cannot be used on :cpp:type:`RawVector`, :cpp:type:`List` (:cpp:type:`GenericVector`) and :cpp:type:`ExpressionVector`.
+      ``sort()`` cannot be used on :cpp:type:`RawVector`, :cpp:type:`List` (:cpp:type:`GenericVector`) and :cpp:type:`ExpressionVector`.
 
    .. code-block:: cpp
 
@@ -585,11 +585,11 @@ Defined  in **Vector**
 
 .. cpp:function:: SEXP eval() const
 
-   Evaluate the vector in global environment. It may only make sense for **ExpressionVector**.
+   Evaluate the vector in global environment. It may only make sense for :cpp:type:`ExpressionVector`.
 
 .. cpp:function:: SEXP eval(SEXP env) const
 
-   Evaluate the vector in the environment given by *env*. It may only make sense for **ExpressionVector**.
+   Evaluate the vector in the environment given by *env*. It may only make sense for :cpp:type:`ExpressionVector`.
    
    .. code-block:: cpp
 
@@ -669,7 +669,7 @@ Inherited from **NamesProxyPolicy**
 Inherited from other classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-See :doc:`RObject`.
+See :cpp:class:`RObject`.
 
 Static Public Member Functions
 -------------------------------
