@@ -332,6 +332,10 @@ Defined  in **Vector**
 .. cpp:function:: Vector& sort()
 
    Sort the vector in place in increasing order, and return the sorted vector.
+   
+   .. warning::
+      
+      `sort()` cannot be used on :cpp:type:`RawVector`, :cpp:type:`List` (:cpp:type:`GenericVector`) and :cpp:type:`ExpressionVector`.
 
    .. code-block:: cpp
 
