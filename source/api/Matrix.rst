@@ -163,7 +163,7 @@ Defined in **Matrix**
 
    Return the *i*-th row (0-based).
 
-.. cpp:function:: Column row(int i)
+.. cpp:function:: Column col(int i)
 
    Return the *i*-th column (0-based).
 
