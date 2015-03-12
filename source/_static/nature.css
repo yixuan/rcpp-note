@@ -232,7 +232,7 @@ pre {
     -moz-box-shadow: 1px 1px 1px #d8d8d8;
 }
  
-tt {
+code {
     background-color: #ecf0f3;
     color: #555;
     /* padding: 1px 2px; */
