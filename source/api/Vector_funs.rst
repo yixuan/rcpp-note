@@ -414,31 +414,31 @@ Defined  in **Vector**
 
    Add a new element *object* with name *name* to the front of this vector.
 
-An example for the four functions above:
+   An example for the four functions above:
 
-.. code-block:: cpp
+   .. code-block:: cpp
 
-   #include <Rcpp.h>
-   using namespace Rcpp;
+      #include <Rcpp.h>
+      using namespace Rcpp;
 
-   // [[Rcpp::export]]
-   RObject ex_Vector_elements(NumericVector x)
-   {
-       x.push_back(1);
-       x.push_back(10, "ten");
-       x.push_front(2);
-       x.push_front(9, "nine");
-       return x; // c(nine = 9, 2, 1, ten = 10)
-   }
+      // [[Rcpp::export]]
+      RObject ex_Vector_elements(NumericVector x)
+      {
+          x.push_back(1);
+          x.push_back(10, "ten");
+          x.push_front(2);
+          x.push_front(9, "nine");
+          return x; // c(nine = 9, 2, 1, ten = 10)
+      }
       
-   /*** R
-
-   v = c(1, 2, 3)
-   ex_Vector_elements(v)
-   ## nine                           ten 
-   ##    9    2    1    2    3    1   10
+      /*** R
+   
+      v = c(1, 2, 3)
+      ex_Vector_elements(v)
+      ## nine                           ten 
+      ##    9    2    1    2    3    1   10
       
-   */
+      */
 
 ::
 
@@ -533,10 +533,51 @@ An example for the four functions above:
 .. cpp:function:: bool containsElementNamed(const char* target) const
 
    Whether this vector contains an element with the target name.
+   
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      RObject ex_Vector_contain(List lst)
+      {
+          bool containsx = lst.containsElementNamed("x");
+          return wrap(containsx);
+      }
+      
+      /*** R
+      
+      l1 = list(x = 1, y = 2)
+      l2 = list(1, 2)
+      ex_Vector_contain(l1)  ## TRUE
+      ex_Vector_contain(l2)  ## FALSE
+      
+      */
 
 .. cpp:function:: int findName(const std::string& name) const
 
-   Find the index of the element whose name is *name* in the vector.
+   Find the index of the element whose name is *name* in the vector. If not
+   found, an error will be given.
+   
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      RObject ex_Vector_find(NumericVector v, std::string name)
+      {
+          return wrap(v.findName(name));
+      }
+      
+      /*** R
+      
+      v = c(z = 1, y = 2, x = 3)
+      ex_Vector_find(v, "x")  ## 2 (note that index in C++ is zero-based)
+      ex_Vector_find(v, "w")  ## error: no name 'w' found
+      
+      */
 
 .. cpp:function:: SEXP eval() const
 
@@ -545,6 +586,39 @@ An example for the four functions above:
 .. cpp:function:: SEXP eval(SEXP env) const
 
    Evaluate the vector in the environment given by *env*. It may only make sense for **ExpressionVector**.
+   
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      RObject ex1_Vector_eval(ExpressionVector expr)
+      {
+          expr.eval();
+          return R_NilValue;
+      }
+      
+      // [[Rcpp::export]]
+      RObject ex2_Vector_eval(ExpressionVector expr, SEXP env)
+      {
+          expr.eval(env);
+          return R_NilValue;
+      }
+      
+      /*** R
+      
+      expr = expression(x <- 1, y <- x + 1)
+      ex1_Vector_eval(expr)
+      ls()
+      ## [1] "ex1_Vector_eval" "ex2_Vector_eval" "expr"            "x"              
+      ## [5] "y"
+      env = new.env()
+      ex2_Vector_eval(expr, env)
+      ls(envir = env)
+      ## [1] "x" "y"
+      
+      */
 
 Inherited from **NamesProxyPolicy**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -557,6 +631,36 @@ Inherited from **NamesProxyPolicy**
 .. cpp:function:: const_NamesProxy names() const
 
    Extract the names of this vector. Read-only.
+   
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      RObject ex_Vector_getname(NumericVector v)
+      {
+          return v.names();
+      }
+      
+      // [[Rcpp::export]]
+      RObject ex_Vector_setname(NumericVector v, CharacterVector name)
+      {
+          NumericVector v2 = clone(v);
+          v2.names() = name;
+          return v2;
+      }
+      
+      /*** R
+      
+      x = c(a = 1, b = 2, 3)
+      ex_Vector_getname(x)
+      ## [1] "a" "b" ""
+      ex_Vector_setname(x, c("x", "y"))
+      ##    x    y <NA> 
+      ##    1    2    3
+      
+      */
 
 Inherited from other classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -641,7 +745,7 @@ Static Public Member Functions
    .. code-block:: r
 
       library(Rcpp)
-      evalCpp("IntegerVector::create(1.2)")  ## with type conversion
+      evalCpp("IntegerVector::create(1.2)")  ## 1, with type conversion
 
 ``template <typename T1, typename T2>``
 
@@ -653,6 +757,7 @@ Static Public Member Functions
 
       library(Rcpp)
       evalCpp('CharacterVector::create("hello", "universe")')
+      ## [1] "hello"    "universe"
 
 ``template <...>``
 
@@ -664,4 +769,12 @@ Static Public Member Functions
 
       library(Rcpp)
       evalCpp('List::create(1.2, NumericVector::create(1.0, 2.0, 2.1), "key")')
+      ## [[1]]
+      ## [1] 1.2
+      ## 
+      ## [[2]]
+      ## [1] 1.0 2.0 2.1
+      ## 
+      ## [[3]]
+      ## [1] "key"
 
