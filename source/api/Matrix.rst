@@ -1,8 +1,8 @@
 Matrix
 =====================================
 
-A **Matrix** in Rcpp is a **Vector** with dimension attributes.
-It supports all operations defined in **Vector**, and additionally,
+A **Matrix** in Rcpp is a :doc:`Vector` with dimension attributes.
+It supports all operations defined in :doc:`Vector`, and additionally,
 it provides new subsetters to retrieve a row, a column or a submatrix.
 
 Type Definitions

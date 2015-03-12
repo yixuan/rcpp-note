@@ -3,7 +3,7 @@ Vector (Typedefs and Constructors)
 
 The **Vector** class in Rcpp is a template class that represent various types of
 vectors (integer, numeric, character, list, etc.) in R. It's also the foundation of
-**Matrix** and higher dimensional array structures. The **Vector** class accepts one
+:doc:`Matrix` and higher dimensional array structures. The **Vector** class accepts one
 major template parameter, ``RTYPE``, to indicate the type of its elements.
 
 Type Definitions

@@ -248,6 +248,11 @@ em {
     font-weight: normal;
 }
 
+a.reference > em {
+    font-style: normal;
+    font-weight: bold;
+}
+
 .viewcode-back {
     font-family: Arial, sans-serif;
 }
