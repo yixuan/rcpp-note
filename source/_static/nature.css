@@ -248,11 +248,6 @@ em {
     font-weight: normal;
 }
 
-a.reference > em {
-    font-style: normal;
-    font-weight: bold;
-}
-
 .viewcode-back {
     font-family: Arial, sans-serif;
 }
@@ -265,4 +260,19 @@ div.viewcode-block:target {
 
 dl {
     border-bottom: 1px solid #C6C9CB;
+}
+
+
+/***************************************/
+
+code.xref {
+    color: #005b81;
+    background-color: transparent;
+    font-weight: bold;
+    font-family: "Open Sans", Arial, sans-serif;
+}
+
+a.reference > em {
+    font-style: normal;
+    font-weight: bold;
 }

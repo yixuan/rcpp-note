@@ -1,14 +1,16 @@
 RObject
 =====================================
 
-**RObject** can be thought of as the base class of all API classes in Rcpp.
+.. cpp:class:: RObject
+
+:cpp:class:`RObject` can be thought of as the base class of all API classes in Rcpp.
 (Technically speaking this is even not true, but it's best to think in this way
-to understand the role of **RObject**. See next paragraph for explanation.)
+to understand the role of :cpp:class:`RObject`. See next paragraph for explanation.)
 It is not intended to be used directly, but rather it provides the basic
 structure of other API classes, and defines some member functions that are
 available to all derived classes.
 
-Precisely speaking, class **RObject** has no meaningful definition by its own, but
+Precisely speaking, class :cpp:class:`RObject` has no meaningful definition by its own, but
 actually inherits from other four super-classes:
 
 - **PreserveStorage**: This class provides the data field of the underlying R structure
@@ -18,11 +20,11 @@ actually inherits from other four super-classes:
 - **AttributeProxyPolicy**: Defines member functions to work with attributes of objects.
 - **RObjectMethods**: Basic functions that apply to all API classes.
 
-In some sense, the whole functionality of **RObject** is divided into four parts
+In some sense, the whole functionality of :cpp:class:`RObject` is divided into four parts
 that are represented by the classes above. In fact, that API classes in Rcpp are
-derived from **RObject** is just an illusion -- They actually inherit from these
-four basic classes instead. But since **RObject** is almost equivalent to the combination
-of them, it is no harm to regard **RObject** as the parent of other API classes.
+derived from :cpp:class:`RObject` is just an illusion -- They actually inherit from these
+four basic classes instead. But since :cpp:class:`RObject` is almost equivalent to the combination
+of them, it is no harm to regard :cpp:class:`RObject` as the parent of other API classes.
 
 Public Member Functions
 -------------------------
@@ -30,23 +32,23 @@ Public Member Functions
 Constructors
 ~~~~~~~~~~~~~~
 
-.. cpp:function:: RObject()
+.. cpp:function:: RObject::RObject()
 
    Default constructor. Resulting object is a simple wrapper of
    ``R_NilValue`` (``NULL`` in R).
 
-.. cpp:function:: RObject(const RObject& other)
+.. cpp:function:: RObject::RObject(const RObject& other)
 
    Copy constructor. Resulting object will share the SEXP data with *other*.
 
 ``template <typename Proxy>``
 
-.. cpp:function:: RObject(const GenericProxy<Proxy>& proxy)
+.. cpp:function:: RObject::RObject(const GenericProxy<Proxy>& proxy)
 
    Create object from a proxy, such as attribute, slot, field, etc.
 
-Defined in **RObject**
-~~~~~~~~~~~~~~~~~~~~~~~
+Defined in :cpp:class:`RObject`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``template <typename T>``
 
