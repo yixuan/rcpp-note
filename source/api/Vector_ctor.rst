@@ -1,9 +1,11 @@
 Vector (Typedefs and Constructors)
 =====================================
 
-The **Vector** class in Rcpp is a template class that represent various types of
+.. cpp:class:: Vector
+
+The :cpp:class:`Vector` class in Rcpp is a template class that represent various types of
 vectors (integer, numeric, character, list, etc.) in R. It's also the foundation of
-:doc:`Matrix` and higher dimensional array structures. The **Vector** class accepts one
+:cpp:class:`Matrix` and higher dimensional array structures. The :cpp:class:`Vector` class accepts one
 major template parameter, ``RTYPE``, to indicate the type of its elements.
 
 Type Definitions
@@ -82,25 +84,25 @@ Public Member Functions
 Constructors
 ~~~~~~~~~~~~~~
 
-.. cpp:function:: Vector()
+.. cpp:function:: Vector::Vector()
 
    Default constructor. This creates a vector of the appropriate type and zero length.
 
-.. cpp:function:: Vector(const Vector& other)
+.. cpp:function:: Vector::Vector(const Vector& other)
 
    Copy constructor. Resulting object will share the SEXP data with *other*.
 
-.. cpp:function:: Vector(SEXP x)
+.. cpp:function:: Vector::Vector(SEXP x)
 
    Wrap a given vector. A type conversion will be conducted if types do not match.
 
 ``template <typename Proxy>``
 
-.. cpp:function:: Vector(const GenericProxy<Proxy>& proxy)
+.. cpp:function:: Vector::Vector(const GenericProxy<Proxy>& proxy)
 
    Create vector from a proxy, such as attribute, slot, field, etc.
 
-.. cpp:function:: Vector(const no_init& obj)
+.. cpp:function:: Vector::Vector(const no_init& obj)
 
    Create a vector without initializating the values. An example:
    
@@ -111,7 +113,7 @@ Constructors
       ## [1] 3.458460e-323 6.946245e-310 4.940656e-324 6.946245e-310 9.881313e-324
       ## [6] 6.946245e-310 6.946245e-310  0.000000e+00 6.946245e-310  0.000000e+00
 
-.. cpp:function:: Vector(const int& size, const stored_type& u)
+.. cpp:function:: Vector::Vector(const int& size, const stored_type& u)
 
    Create a vector of length *size*, and fill it with value *u*.
 
@@ -123,7 +125,7 @@ Constructors
 
 ``template <typename U>``
 
-.. cpp:function:: Vector(const int& size, const U& u)
+.. cpp:function:: Vector::Vector(const int& size, const U& u)
 
    Create a vector of length *size*, and fill it with value *u*. Type will
    be converted if necessary.
@@ -134,7 +136,7 @@ Constructors
       evalCpp("IntegerVector(10, 2.1)")  ## type conversion
       ## [1] 2 2 2 2 2 2 2 2 2 2
 
-.. cpp:function:: Vector(const std::string& st)
+.. cpp:function:: Vector::Vector(const std::string& st)
 
    Create a vector from a given string, as the example below shows:
    
@@ -158,14 +160,14 @@ Constructors
    .. warning::
    
       This constructor as well as the next one, are intended to work
-      on **CharacterVector**. Vectors of other types might encounter
+      on :cpp:type:`CharacterVector`. Vectors of other types might encounter
       errors with these constructors.
 
-.. cpp:function:: Vector(const char* st)
+.. cpp:function:: Vector::Vector(const char* st)
 
    Ditto.
 
-.. cpp:function:: Vector(const int& size)
+.. cpp:function:: Vector::Vector(const int& size)
 
    Create a vector of length *size*, and fill it with zeros (of the proper type).
 
@@ -175,7 +177,7 @@ Constructors
       evalCpp("NumericVector(10)")
       ## [1] 0 0 0 0 0 0 0 0 0 0
 
-.. cpp:function:: Vector(const Dimension& dims)
+.. cpp:function:: Vector::Vector(const Dimension& dims)
 
    Create a vector with the given dimension, and fill it with zeros. The **Dimension**
    class is defined in ``<Rcpp/Dimension.h>``.
@@ -224,7 +226,7 @@ Constructors
 
 ``template <typename U>``
 
-.. cpp:function:: Vector(const Dimension& dims, const U& u)
+.. cpp:function:: Vector::Vector(const Dimension& dims, const U& u)
 
    Create a vector with the given dimension, and fill it with value *u*. Type will
    be converted if necessary.
@@ -261,7 +263,7 @@ Constructors
 
 ``template <bool NA, typename VEC>``
 
-.. cpp:function:: Vector(const VectorBase<RTYPE, NA, VEC>& other)
+.. cpp:function:: Vector::Vector(const VectorBase<RTYPE, NA, VEC>& other)
 
    Create a vector from another object that is also derived from the **VectorBase** class.
    Typically *other* is an Rcpp sugar expression, in which case the expression is evaluated
@@ -270,7 +272,7 @@ Constructors
 
 ``template <bool NA, typename T>``
 
-.. cpp:function:: Vector(const sugar::SingleLogicalResult<NA, T>& obj)
+.. cpp:function:: Vector::Vector(const sugar::SingleLogicalResult<NA, T>& obj)
 
    Create a vector of length 1 from an object of class **SingleLogicalResult**, usually the result
    returned by ``Rcpp::all()`` or ``Rcpp::any()``.
@@ -291,7 +293,7 @@ Constructors
       ex_Vector_slr() ## TRUE
       */
 
-.. cpp:function:: Vector(const int& size, Func gen)
+.. cpp:function:: Vector::Vector(const int& size, Func gen)
 
    - *size*: length of the vector.
    - *gen*: a function that takes no argument and returns a number of the 
@@ -321,7 +323,7 @@ Constructors
 
 ``template <typename U1>``
 
-.. cpp:function:: Vector(const int& siz, Func gen, const U1& u1)
+.. cpp:function:: Vector::Vector(const int& siz, Func gen, const U1& u1)
 
    - *gen* is a function with the signature
      
@@ -350,7 +352,7 @@ Constructors
 
 ``template <typename U1, typename U2>``
 
-.. cpp:function:: Vector(const int& siz, Func gen, const U1& u1, const U2& u2)
+.. cpp:function:: Vector::Vector(const int& siz, Func gen, const U1& u1, const U2& u2)
 
    - *gen* is a function with the signature
      
@@ -379,7 +381,7 @@ Constructors
 
 ``template <typename U1, typename U2, typename U3>``
 
-.. cpp:function:: Vector(const int& siz, Func gen, const U1& u1, const U2& u2, const U3& u3)
+.. cpp:function:: Vector::Vector(const int& siz, Func gen, const U1& u1, const U2& u2, const U3& u3)
 
    - *gen* is a function with the signature
      
@@ -389,7 +391,7 @@ Constructors
 
 ``template <typename InputIterator>``
 
-.. cpp:function:: Vector(InputIterator first, InputIterator last)
+.. cpp:function:: Vector::Vector(InputIterator first, InputIterator last)
 
    Copy the data between iterators *first* and *last* to the created vector.
    An example:
@@ -413,7 +415,7 @@ Constructors
 
 ``template <typename InputIterator>``
 
-.. cpp:function:: Vector(InputIterator first, InputIterator last, int n)
+.. cpp:function:: Vector::Vector(InputIterator first, InputIterator last, int n)
 
    Create a vector of length *n*, and copy the data between iterators *first* and *last*
    to the created vector. *n* should be greater than or equal to the distance betwen
@@ -442,7 +444,7 @@ Constructors
 
 ``template <typename InputIterator, typename Func>``
 
-.. cpp:function:: Vector(InputIterator first, InputIterator last, Func func)
+.. cpp:function:: Vector::Vector(InputIterator first, InputIterator last, Func func)
 
    - *func* is a unary function that takes one argument of the type pointed by
      **InputIterator**, and returns a number convertible to the type of the vector.
@@ -469,7 +471,7 @@ Constructors
 
 ``template <typename InputIterator, typename Func>``
 
-.. cpp:function:: Vector(InputIterator first, InputIterator last, Func func, int n)
+.. cpp:function:: Vector::Vector(InputIterator first, InputIterator last, Func func, int n)
 
    - *func* is a unary function that takes one argument of the type pointed by
      **InputIterator**, and returns a number convertible to the type of the vector.
