@@ -1,8 +1,10 @@
 Matrix
 =====================================
 
-A **Matrix** in Rcpp is a :doc:`Vector` with dimension attributes.
-It supports all operations defined in :doc:`Vector`, and additionally,
+.. cpp:class:: Matrix
+
+A :cpp:class:`Matrix` in Rcpp is a :cpp:class:`Vector` with dimension attributes.
+It supports all operations defined in :cpp:class:`Vector`, and additionally,
 it provides new subsetters to retrieve a row, a column or a submatrix.
 
 Type Definitions
@@ -75,73 +77,145 @@ Public Member Functions
 Constructors
 ~~~~~~~~~~~~~~
 
-.. cpp:function:: Matrix()
+.. cpp:function:: Matrix::Matrix()
 
    Create a matrix with zero row and zero column.
 
-.. cpp:function:: Matrix(const Matrix& other)
+.. cpp:function:: Matrix::Matrix(const Matrix& other)
 
    Copy constructor. Resulting object will share the SEXP data with *other*.
 
-.. cpp:function:: Matrix(SEXP x)
+.. cpp:function:: Matrix::Matrix(SEXP x)
 
    Wrap a given Matrix. A type conversion will be conducted if types don't match.
 
-.. cpp:function:: Matrix(const Dimension& dims)
+.. cpp:function:: Matrix::Matrix(const Dimension& dims)
 
    Create a Matrix with the given dimension, and fill it with zeros. The **Dimension**
    class is defined in ``<Rcpp/Dimension.h>``. An example:
    
-   .. code-block:: cpp
+   .. code-block:: r
       
-      SEXP gen_matrix()
-      {
-          Rcpp::Dimension dim(6, 7);
-          // a 6x7 matrix
-          return Rcpp::NumericMatrix(dim);
-      }
+      library(Rcpp)
+      evalCpp("NumericMatrix(Dimension(2, 3))")
+      ##      [,1] [,2] [,3]
+      ## [1,]    0    0    0
+      ## [2,]    0    0    0
 
-.. cpp:function:: Matrix(const int& nrows_, const int& ncols)
+.. cpp:function:: Matrix::Matrix(const int& nrows_, const int& ncols)
 
    Create a Matrix with *nrows_* rows and *ncols* columns, and fill it with zeros.
+
+   .. code-block:: r
+      
+      library(Rcpp)
+      evalCpp("NumericMatrix(2, 3)")
+      ##      [,1] [,2] [,3]
+      ## [1,]    0    0    0
+      ## [2,]    0    0    0
 
 ::
 
    template <typename Iterator>
 
-.. cpp:function:: Matrix(const int& nrows_, const int& ncols, Iterator start)
+.. cpp:function:: Matrix::Matrix(const int& nrows_, const int& ncols, Iterator start)
 
    Create a Matrix with *nrows_* rows and *ncols* columns, and fill it with data starting from *start*.
+
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      RObject ex_Matrix_data()
+      {
+          double src[] = {1, 2, 3, 4, 5, 6};
+          return NumericMatrix(2, 2, src);
+      }
+      
+      /*** R
+      
+      ex_Matrix_data()
+      ##      [,1] [,2]
+      ## [1,]    1    3
+      ## [2,]    2    4
+
+      */
  
-.. cpp:function:: Matrix(const int& n)
+.. cpp:function:: Matrix::Matrix(const int& n)
 
    Create a diagonal Matrix with *n* rows and *n* columns, and fill it with zeroes.
+   
+   .. code-block:: r
+      
+      library(Rcpp)
+      evalCpp("NumericMatrix(2)")
+      ##      [,1] [,2]
+      ## [1,]    0    0
+      ## [2,]    0    0
  
 ::
 
    template <bool NA, typename MAT>
 
-.. cpp:function:: Matrix(const MatrixBase<RTYPE, NA, MAT>& other)
+.. cpp:function:: Matrix::Matrix(const MatrixBase<RTYPE, NA, MAT>& other)
 
    Create a matrix from another object that is also derived from the **MatrixBase** class.
    Typically *other* is an Rcpp sugar expression, such as the example below:
-   
+
    .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
       
-      SEXP matrix_from_sugar()
+      // [[Rcpp::export]]
+      RObject ex_Matrix_fromsugar()
       {
-          using namespace Rcpp;
-          NumericMatrix x(5);
+          NumericMatrix x(3);
           IntegerMatrix y = col(x); // rhs is a sugar expression
           return y;
       }
+      
+      /*** R
+      
+      ex_Matrix_fromsugar()
+      ##      [,1] [,2] [,3]
+      ## [1,]    1    2    3
+      ## [2,]    1    2    3
+      ## [3,]    1    2    3
 
-.. cpp:function:: Matrix(const SubMatrix<RTYPE>& sub)
+      */
+
+.. cpp:function:: Matrix::Matrix(const SubMatrix<RTYPE>& sub)
 
    Create a matrix from a submatrix.
 
-Defined in **Matrix**
-~~~~~~~~~~~~~~~~~~~~~~
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      RObject ex_Matrix_fromsub(NumericMatrix x, int n)
+      {
+          NumericMatrix::Sub sub = x(Range(0, n - 1), Range(0, n - 1));
+          NumericMatrix res(sub);
+          return res;
+      }
+      
+      /*** R
+      
+      x = matrix(as.numeric(1:9), 3, 3)
+      ex_Matrix_fromsub(x, 2);
+      ##      [,1] [,2]
+      ## [1,]    1    4
+      ## [2,]    2    5
+
+      */
+
+Defined in :cpp:class:`Matrix`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. cpp:function:: int ncol() const
 
