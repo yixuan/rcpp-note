@@ -333,6 +333,26 @@ Defined  in **Vector**
 
    Sort the vector in place in increasing order, and return the sorted vector.
 
+   .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      RObject ex_Vector_sort(NumericVector x)
+      {
+          NumericVector y = clone(x);
+          return y.sort();
+      }
+      
+      /*** R
+      
+      v = c(2, 1, 3)
+      ex_Vector_sort(v)
+      ## [1] 1 2 3
+      
+      */
+      
 ::
 
    template <typename InputIterator>
@@ -340,16 +360,27 @@ Defined  in **Vector**
 .. cpp:function:: void assign(InputIterator first, InputIterator last)
 
    Copy and assign the data between *first* and *last* to this vector. An example:
-   
+
    .. code-block:: cpp
-   
-      SEXP test_assign()
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
+      
+      // [[Rcpp::export]]
+      RObject ex_Vector_assign()
       {
-          Rcpp::NumericVector x(10); // originally of length 10
+          NumericVector x(10);  // originally of length 10
           double src[] = {1, 2, 3};
-          x.assign(src, src + 3);
-          return x; // now becomes c(1, 2, 3)
+          x.assign(src, src + 3);  // now becomes c(1, 2, 3)
+          return x;
       }
+      
+      /*** R
+      
+      ex_Vector_assign()
+      ## [1] 1 2 3
+      
+      */
 
 ::
 
@@ -379,7 +410,7 @@ Defined  in **Vector**
 
    template <typename T>
 
-.. cpp:function:: void push_back(const T& object, const std::string& name)
+.. cpp:function:: void push_front(const T& object, const std::string& name)
 
    Add a new element *object* with name *name* to the front of this vector.
 
@@ -387,15 +418,27 @@ An example for the four functions above:
 
 .. code-block:: cpp
 
-   SEXP add_element()
+   #include <Rcpp.h>
+   using namespace Rcpp;
+
+   // [[Rcpp::export]]
+   RObject ex_Vector_elements(NumericVector x)
    {
-       Rcpp::NumericVector x(0);
        x.push_back(1);
        x.push_back(10, "ten");
        x.push_front(2);
        x.push_front(9, "nine");
        return x; // c(nine = 9, 2, 1, ten = 10)
    }
+      
+   /*** R
+
+   v = c(1, 2, 3)
+   ex_Vector_elements(v)
+   ## nine                           ten 
+   ##    9    2    1    2    3    1   10
+      
+   */
 
 ::
 
@@ -414,18 +457,29 @@ An example for the four functions above:
 
    Insert new element *object* before the *position*-th element (0-based).
    Return the pointer to the newly added element.
-   
+
    .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
       
-      SEXP vector_insert()
+      // [[Rcpp::export]]
+      RObject ex_Vector_insert()
       {
-          Rcpp::NumericVector x(1);
+          NumericVector x(1);
           double *iter = x.begin();
           iter = x.insert(iter, 2);
           x.insert(iter, 3);
           x.insert(1, 2.5);
-          return x; // c(3, 2.5, 2, 0)
+          return x;  // c(3, 2.5, 2, 0)
       }
+      
+      /*** R
+      
+      ex_Vector_insert()
+      ## [1] 3.0 2.5 2.0 0.0
+      
+      */
 
 .. cpp:function:: iterator erase(int position)
 
@@ -450,19 +504,31 @@ An example for the four functions above:
    Remove the elements in the range [*first*, *last*).
    Return the pointer to the new location of the element that followed the
    last erased element.
-   
+
    .. code-block:: cpp
+
+      #include <Rcpp.h>
+      using namespace Rcpp;
       
-      SEXP vector_erase()
+      // [[Rcpp::export]]
+      RObject ex_Vector_erase()
       {
-          using namespace Rcpp;
           NumericVector x = NumericVector::create(1, 2, 3, 4, 5, 6, 7);
           double *iter = x.begin();
-          x.erase(iter + 1, iter + 3); // remove 2 and 3
+          iter = x.erase(iter + 1, iter + 3); // remove 2 and 3
           // now x becomes c(1, 4, 5, 6, 7)
-          x.erase(3, 5); // remove 6 and 7
-          return x; // c(1, 4, 5)
+          x.erase(iter); // remove 4
+          // now x becomes c(1, 5, 6, 7)
+          x.erase(2, 4); // remove 6 and 7
+          return x; // c(1, 5)
       }
+      
+      /*** R
+      
+      ex_Vector_erase()
+      ## [1] 1 5
+      
+      */
 
 .. cpp:function:: bool containsElementNamed(const char* target) const
 
