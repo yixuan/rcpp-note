@@ -29,7 +29,7 @@ import os
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.mathjax',
+#    'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
 ]
@@ -48,7 +48,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Rcpp Note'
-copyright = u'2014, Yixuan Qiu'
+copyright = u'2015, Yixuan Qiu'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
