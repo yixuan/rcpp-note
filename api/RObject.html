@@ -1,0 +1,624 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>RObject &mdash; Rcpp Note 0.11.3 documentation</title>
+    
+    <link rel="stylesheet" href="../static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../static/jquery-ui.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.11.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/jquery-ui.min.js"></script>
+    <script>
+      $( document ).ready(function() {
+          $(".highlight-cpp").wrap("<div class='accordion-box'></div>").before("<p class='accordion-header'>Show Example</p>");
+          $(".accordion-box").accordion({
+            active: false,
+            collapsible: true,
+            header: "p.accordion-header",
+            heightStyleType: "fill"
+          });
+      });
+    </script>
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-43536203-3', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <link rel="top" title="Rcpp Note 0.11.3 documentation" href="../index.html" />
+    <link rel="up" title="API Classes" href="../apiclass.html" />
+    <link rel="next" title="Vector (Typedefs and Constructors)" href="Vector_ctor.html" />
+    <link rel="prev" title="API Classes" href="../apiclass.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Vector_ctor.html" title="Vector (Typedefs and Constructors)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../apiclass.html" title="API Classes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Rcpp Note 0.11.3 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../apiclass.html" accesskey="U">API Classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="robject">
+<h1>RObject<a class="headerlink" href="#robject" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv27RObject">
+<span id="RObject"></span><em class="property">class </em><code class="descclassname"></code><code class="descname">RObject</code><a class="headerlink" href="#_CPPv27RObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference internal" href="#_CPPv27RObject" title="RObject"><code class="xref cpp cpp-class docutils literal"><span class="pre">RObject</span></code></a> can be thought of as the base class of all API classes in Rcpp.
+(Technically speaking this is even not true, but it&#8217;s best to think in this way
+to understand the role of <a class="reference internal" href="#_CPPv27RObject" title="RObject"><code class="xref cpp cpp-class docutils literal"><span class="pre">RObject</span></code></a>. See next paragraph for explanation.)
+It is not intended to be used directly, but rather it provides the basic
+structure of other API classes, and defines some member functions that are
+available to all derived classes.</p>
+<p>Precisely speaking, class <a class="reference internal" href="#_CPPv27RObject" title="RObject"><code class="xref cpp cpp-class docutils literal"><span class="pre">RObject</span></code></a> has no meaningful definition by its own, but
+actually inherits from other four super-classes:</p>
+<ul class="simple">
+<li><strong>PreserveStorage</strong>: This class provides the data field of the underlying R structure
+(of type <strong>SEXP</strong>) that actually describes this object in R. It also defines basic
+member functions to get/set that field.</li>
+<li><strong>SlotProxyPolicy</strong>: Defines member functions to manipulate slots of S4 objects.</li>
+<li><strong>AttributeProxyPolicy</strong>: Defines member functions to work with attributes of objects.</li>
+<li><strong>RObjectMethods</strong>: Basic functions that apply to all API classes.</li>
+</ul>
+<p>In some sense, the whole functionality of <a class="reference internal" href="#_CPPv27RObject" title="RObject"><code class="xref cpp cpp-class docutils literal"><span class="pre">RObject</span></code></a> is divided into four parts
+that are represented by the classes above. In fact, that API classes in Rcpp are
+derived from <a class="reference internal" href="#_CPPv27RObject" title="RObject"><code class="xref cpp cpp-class docutils literal"><span class="pre">RObject</span></code></a> is just an illusion &#8211; They actually inherit from these
+four basic classes instead. But since <a class="reference internal" href="#_CPPv27RObject" title="RObject"><code class="xref cpp cpp-class docutils literal"><span class="pre">RObject</span></code></a> is almost equivalent to the combination
+of them, it is no harm to regard <a class="reference internal" href="#_CPPv27RObject" title="RObject"><code class="xref cpp cpp-class docutils literal"><span class="pre">RObject</span></code></a> as the parent of other API classes.</p>
+<div class="section" id="public-member-functions">
+<h2>Public Member Functions<a class="headerlink" href="#public-member-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="constructors">
+<h3>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv2N7RObject7RObjectEv">
+<span id="RObject::RObject"></span><code class="descclassname">RObject::</code><code class="descname">RObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N7RObject7RObjectEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default constructor. Resulting object is a simple wrapper of
+<code class="docutils literal"><span class="pre">R_NilValue</span></code> (<code class="docutils literal"><span class="pre">NULL</span></code> in R).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N7RObject7RObjectERK7RObject">
+<span id="RObject::RObject__RObjectCR"></span><code class="descclassname">RObject::</code><code class="descname">RObject</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv2N7RObject7RObjectEv" title="RObject::RObject">RObject</a> &amp;<em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N7RObject7RObjectERK7RObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy constructor. Resulting object will share the SEXP data with <em>other</em>.</p>
+</dd></dl>
+
+<p><code class="docutils literal"><span class="pre">template</span> <span class="pre">&lt;typename</span> <span class="pre">Proxy&gt;</span></code></p>
+<dl class="function">
+<dt id="_CPPv2N7RObject7RObjectERK12GenericProxyI5ProxyE">
+<span id="RObject::RObject__GenericProxy:Proxy:CR"></span><code class="descclassname">RObject::</code><code class="descname">RObject</code><span class="sig-paren">(</span><em class="property">const</em> GenericProxy&lt;Proxy&gt; &amp;<em>proxy</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N7RObject7RObjectERK12GenericProxyI5ProxyE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create object from a proxy, such as attribute, slot, field, etc.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="defined-in-robject">
+<h3>Defined in <a class="reference internal" href="#_CPPv27RObject" title="RObject"><code class="xref cpp cpp-class docutils literal"><span class="pre">RObject</span></code></a><a class="headerlink" href="#defined-in-robject" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">template</span> <span class="pre">&lt;typename</span> <span class="pre">T&gt;</span></code></p>
+<dl class="function">
+<dt id="_CPPv2aSRK1T">
+<span id="assign-operator__TCR"></span><a class="reference internal" href="#_CPPv27RObject" title="RObject">RObject</a> &amp;<code class="descclassname"></code><code class="descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> T &amp;<em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2aSRK1T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assignment operator. The left-hand-side object will share the SEXP data
+of <em>other</em>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="inherited-from-preservestorage">
+<h3>Inherited from <strong>PreserveStorage</strong><a class="headerlink" href="#inherited-from-preservestorage" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Member functions ending with two underscores (<code class="docutils literal"><span class="pre">__</span></code>) are mostly intended for internal use
+(even though they are public), and should be avoided in user programs.</p>
+</div>
+<dl class="function">
+<dt id="_CPPv25set__4SEXP">
+<span id="set____SEXP"></span>void <code class="descclassname"></code><code class="descname">set__</code><span class="sig-paren">(</span>SEXP <em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv25set__4SEXP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace the SEXP data field of this object by another one.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK5get__Ev">
+<span id="get__C"></span>SEXP <code class="descclassname"></code><code class="descname">get__</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK5get__Ev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the SEXP data field of this object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv212invalidate__v">
+<span id="invalidate__"></span>SEXP <code class="descclassname"></code><code class="descname">invalidate__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv212invalidate__v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the SEXP data field of this object, and invalidate this object
+by setting it to be <code class="docutils literal"><span class="pre">R_NilValue</span></code>.</p>
+</dd></dl>
+
+<p><code class="docutils literal"><span class="pre">template</span> <span class="pre">&lt;typename</span> <span class="pre">T&gt;</span></code></p>
+<dl class="function">
+<dt id="_CPPv26copy__RK1T">
+<span id="copy____TCR"></span>T &amp;<code class="descclassname"></code><code class="descname">copy__</code><span class="sig-paren">(</span><em class="property">const</em> T &amp;<em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26copy__RK1T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the SEXP data field from another object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv28inheritsPKc">
+<span id="inherits__cCP"></span>bool <code class="descclassname"></code><code class="descname">inherits</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>clazz</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv28inheritsPKc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether this object inherits from a given class. Note that it is <strong>NOT</strong>
+applicable to atomic types (e.g. <code class="docutils literal"><span class="pre">numeric</span></code>, <code class="docutils literal"><span class="pre">character</span></code>, <code class="docutils literal"><span class="pre">list</span></code> etc.)</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">bool</span> <span class="nf">ex1_inherits</span><span class="p">(</span><span class="n">RObject</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">inherits</span><span class="p">(</span><span class="s">&quot;numeric&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">bool</span> <span class="nf">ex2_inherits</span><span class="p">(</span><span class="n">RObject</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">inherits</span><span class="p">(</span><span class="s">&quot;myclass&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">val = 2.0</span>
+<span class="cm">ex1_inherits(val)  ## FALSE</span>
+<span class="cm">ex2_inherits(val)  ## FALSE</span>
+
+<span class="cm">class(val) = &quot;myclass&quot;</span>
+<span class="cm">ex2_inherits(val)  ## TRUE</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NKcv4SEXPEv">
+<span id="castto-SEXP-operatorC"></span><code class="descclassname"></code><code class="descname">operator SEXP</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKcv4SEXPEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conversion operator to SEXP.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="inherited-from-slotproxypolicy">
+<h3>Inherited from <strong>SlotProxyPolicy</strong><a class="headerlink" href="#inherited-from-slotproxypolicy" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The object needs to be S4 in order to call the member functions in
+this section.</p>
+</div>
+<dl class="function">
+<dt id="_CPPv24slotRKNSt6stringE">
+<span id="slot__ssCR"></span>SlotProxy <code class="descclassname"></code><code class="descname">slot</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv24slotRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the object in slot specified by <em>name</em>. This can appear in
+the left hand side of assignment.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_slot_set</span><span class="p">(</span><span class="n">RObject</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">slot</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">NumericVector</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">wrap</span><span class="p">(</span><span class="s">&quot;x field modified&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">set.seed(123)</span>
+<span class="cm">m = Matrix::Matrix(rnorm(4), 2)</span>
+<span class="cm">print(m)</span>
+
+<span class="cm">## 2 x 2 Matrix of class &quot;dgeMatrix&quot;</span>
+<span class="cm">##            [,1]       [,2]</span>
+<span class="cm">## [1,] -0.5604756 1.55870831</span>
+<span class="cm">## [2,] -0.2301775 0.07050839</span>
+
+<span class="cm">ex_slot_set(m)</span>
+<span class="cm">print(m)</span>
+
+<span class="cm">## 2 x 2 Matrix of class &quot;dgeMatrix&quot;</span>
+<span class="cm">##      [,1] [,2]</span>
+<span class="cm">## [1,]    0    0</span>
+<span class="cm">## [2,]    0    0</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK4slotERKNSt6stringE">
+<span id="slot__ssCRC"></span>const_SlotProxy <code class="descclassname"></code><code class="descname">slot</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK4slotERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the object in slot specified by <em>name</em>. Read-only.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_slot_get</span><span class="p">(</span><span class="n">RObject</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">slot</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">set.seed(123)</span>
+<span class="cm">m = Matrix::Matrix(rnorm(4), 2)</span>
+<span class="cm">print(m)</span>
+
+<span class="cm">## 2 x 2 Matrix of class &quot;dgeMatrix&quot;</span>
+<span class="cm">##            [,1]       [,2]</span>
+<span class="cm">## [1,] -0.5604756 1.55870831</span>
+<span class="cm">## [2,] -0.2301775 0.07050839</span>
+
+<span class="cm">ex_slot_get(m)</span>
+
+<span class="cm">## [1] -0.56047565 -0.23017749  1.55870831  0.07050839</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK7hasSlotERKNSt6stringE">
+<span id="hasSlot__ssCRC"></span>bool <code class="descclassname"></code><code class="descname">hasSlot</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK7hasSlotERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this object has a slot given by <em>name</em>.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">bool</span> <span class="nf">ex_hasSlot</span><span class="p">(</span><span class="n">RObject</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">hasSlot</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">set.seed(123)</span>
+<span class="cm">m = Matrix::Matrix(rnorm(4), 2)</span>
+<span class="cm">ex_hasSlot(m)    ## TRUE</span>
+<span class="cm">ex_hasSlot(2.0)  ## error, not an S4</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="inherited-from-attributeproxypolicy">
+<h3>Inherited from <strong>AttributeProxyPolicy</strong><a class="headerlink" href="#inherited-from-attributeproxypolicy" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv24attrRKNSt6stringE">
+<span id="attr__ssCR"></span>AttributeProxy <code class="descclassname"></code><code class="descname">attr</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv24attrRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the object asscociated with attribute <em>name</em>. This can appear in
+the left hand side of assignment.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_attr_set</span><span class="p">(</span><span class="n">RObject</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">attr</span><span class="p">(</span><span class="s">&quot;new_attr&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;some value&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">wrap</span><span class="p">(</span><span class="s">&quot;new attribute has been set&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">x = 1</span>
+<span class="cm">ex_attr_set(x)</span>
+<span class="cm">print(x)</span>
+
+<span class="cm">## [1] 1</span>
+<span class="cm">## attr(,&quot;new_attr&quot;)</span>
+<span class="cm">## [1] &quot;some value&quot;</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK4attrERKNSt6stringE">
+<span id="attr__ssCRC"></span>const_AttributeProxy <code class="descclassname"></code><code class="descname">attr</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK4attrERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the object asscociated with attribute <em>name</em>. Read-only.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_attr_get</span><span class="p">(</span><span class="n">RObject</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">attr</span><span class="p">(</span><span class="s">&quot;dim&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">m = matrix(0, 2, 2)</span>
+<span class="cm">ex_attr_get(m)</span>
+
+<span class="cm">## [1] 2 2</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK14attributeNamesEv">
+<span id="attributeNamesC"></span>std::vector&lt;std::string&gt; <code class="descclassname"></code><code class="descname">attributeNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK14attributeNamesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the attribute names of this object.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">ex_attributeNames</span><span class="p">(</span><span class="n">RObject</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">attr</span><span class="p">(</span><span class="s">&quot;some_attr&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;some value&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">attributeNames</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">m = matrix(0, 2, 2)</span>
+<span class="cm">ex_attributeNames(m)</span>
+
+<span class="cm">## [1] &quot;dim&quot;       &quot;some_attr&quot;</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK12hasAttributeERKNSt6stringE">
+<span id="hasAttribute__ssCRC"></span>bool <code class="descclassname"></code><code class="descname">hasAttribute</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK12hasAttributeERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this object has an attribute whose name is specified by <em>name</em>.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">bool</span> <span class="nf">ex_hasAttribute</span><span class="p">(</span><span class="n">RObject</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">hasAttribute</span><span class="p">(</span><span class="s">&quot;dim&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">m = matrix(0, 2, 2)</span>
+<span class="cm">ex_hasAttribute(m)    ## TRUE</span>
+<span class="cm">ex_hasAttribute(0.2)  ## FALSE</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="inherited-from-robjectmethods">
+<h3>Inherited from <strong>RObjectMethods</strong><a class="headerlink" href="#inherited-from-robjectmethods" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv2NK6isNULLEv">
+<span id="isNULLC"></span>bool <code class="descclassname"></code><code class="descname">isNULL</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6isNULLEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this object is <code class="docutils literal"><span class="pre">NULL</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK9sexp_typeEv">
+<span id="sexp_typeC"></span>int <code class="descclassname"></code><code class="descname">sexp_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK9sexp_typeEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the internal SEXP type of this object. Possible values are:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="k">enum</span> <span class="p">{</span>
+    <span class="n">NILSXP</span>      <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>    <span class="cm">/* nil = NULL */</span>
+    <span class="n">SYMSXP</span>      <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>    <span class="cm">/* symbols */</span>
+    <span class="n">LISTSXP</span>     <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>    <span class="cm">/* lists of dotted pairs */</span>
+    <span class="n">CLOSXP</span>      <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>    <span class="cm">/* closures */</span>
+    <span class="n">ENVSXP</span>      <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>    <span class="cm">/* environments */</span>
+    <span class="n">PROMSXP</span>     <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>    <span class="cm">/* promises: [un]evaluated closure arguments */</span>
+    <span class="n">LANGSXP</span>     <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>    <span class="cm">/* language constructs (special lists) */</span>
+    <span class="n">SPECIALSXP</span>  <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>    <span class="cm">/* special forms */</span>
+    <span class="n">BUILTINSXP</span>  <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>    <span class="cm">/* builtin non-special forms */</span>
+    <span class="n">CHARSXP</span>     <span class="o">=</span> <span class="mi">9</span><span class="p">,</span>    <span class="cm">/* &quot;scalar&quot; string type (internal only)*/</span>
+    <span class="n">LGLSXP</span>      <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>   <span class="cm">/* logical vectors */</span>
+    <span class="n">INTSXP</span>      <span class="o">=</span> <span class="mi">13</span><span class="p">,</span>   <span class="cm">/* integer vectors */</span>
+    <span class="n">REALSXP</span>     <span class="o">=</span> <span class="mi">14</span><span class="p">,</span>   <span class="cm">/* real variables */</span>
+    <span class="n">CPLXSXP</span>     <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>   <span class="cm">/* complex variables */</span>
+    <span class="n">STRSXP</span>      <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>   <span class="cm">/* string vectors */</span>
+    <span class="n">DOTSXP</span>      <span class="o">=</span> <span class="mi">17</span><span class="p">,</span>   <span class="cm">/* dot-dot-dot object */</span>
+    <span class="n">ANYSXP</span>      <span class="o">=</span> <span class="mi">18</span><span class="p">,</span>   <span class="cm">/* make &quot;any&quot; args work */</span>
+    <span class="n">VECSXP</span>      <span class="o">=</span> <span class="mi">19</span><span class="p">,</span>   <span class="cm">/* generic vectors */</span>
+    <span class="n">EXPRSXP</span>     <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>   <span class="cm">/* expressions vectors */</span>
+    <span class="n">BCODESXP</span>    <span class="o">=</span> <span class="mi">21</span><span class="p">,</span>   <span class="cm">/* byte code */</span>
+    <span class="n">EXTPTRSXP</span>   <span class="o">=</span> <span class="mi">22</span><span class="p">,</span>   <span class="cm">/* external pointer */</span>
+    <span class="n">WEAKREFSXP</span>  <span class="o">=</span> <span class="mi">23</span><span class="p">,</span>   <span class="cm">/* weak reference */</span>
+    <span class="n">RAWSXP</span>      <span class="o">=</span> <span class="mi">24</span><span class="p">,</span>   <span class="cm">/* raw bytes */</span>
+    <span class="n">S4SXP</span>       <span class="o">=</span> <span class="mi">25</span><span class="p">,</span>   <span class="cm">/* S4 non-vector */</span>
+    <span class="n">NEWSXP</span>      <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>   <span class="cm">/* fresh node creaed in new page */</span>
+    <span class="n">FREESXP</span>     <span class="o">=</span> <span class="mi">31</span><span class="p">,</span>   <span class="cm">/* node released by GC */</span>
+    <span class="n">FUNSXP</span>      <span class="o">=</span> <span class="mi">99</span>    <span class="cm">/* Closure or Builtin */</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK8isObjectEv">
+<span id="isObjectC"></span>bool <code class="descclassname"></code><code class="descname">isObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK8isObjectEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this object has a &#8220;class&#8221; attribute.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK4isS4Ev">
+<span id="isS4C"></span>bool <code class="descclassname"></code><code class="descname">isS4</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK4isS4Ev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this is an S4 object in R.</p>
+</dd></dl>
+
+<p>An example for the functions above:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">List</span> <span class="nf">ex_RObjectMethods</span><span class="p">(</span><span class="n">RObject</span> <span class="n">robj</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">List</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">Named</span><span class="p">(</span><span class="s">&quot;is_null&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span><span class="n">robj</span><span class="p">.</span><span class="n">isNULL</span><span class="p">()),</span>
+                        <span class="n">Named</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span><span class="n">robj</span><span class="p">.</span><span class="n">sexp_type</span><span class="p">()),</span>
+                        <span class="n">Named</span><span class="p">(</span><span class="s">&quot;has_class&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span><span class="n">robj</span><span class="p">.</span><span class="n">isObject</span><span class="p">()),</span>
+                        <span class="n">Named</span><span class="p">(</span><span class="s">&quot;is_S4&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span><span class="n">robj</span><span class="p">.</span><span class="n">isS4</span><span class="p">()));</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">ex_RObjectMethods(NULL)</span>
+
+<span class="cm">## $is_null</span>
+<span class="cm">## [1] TRUE</span>
+<span class="cm">##</span>
+<span class="cm">## $type</span>
+<span class="cm">## [1] 0</span>
+<span class="cm">##</span>
+<span class="cm">## $has_class</span>
+<span class="cm">## [1] FALSE</span>
+<span class="cm">##</span>
+<span class="cm">## $is_S4</span>
+<span class="cm">## [1] FALSE</span>
+
+<span class="cm">ex_RObjectMethods(y ~ x)</span>
+
+<span class="cm">## $is_null</span>
+<span class="cm">## [1] FALSE</span>
+<span class="cm">##</span>
+<span class="cm">## $type</span>
+<span class="cm">## [1] 6</span>
+<span class="cm">##</span>
+<span class="cm">## $has_class</span>
+<span class="cm">## [1] TRUE</span>
+<span class="cm">##</span>
+<span class="cm">## $is_S4</span>
+<span class="cm">## [1] FALSE</span>
+
+<span class="cm">setRefClass(&quot;Myclass&quot;, fields = list(data = &quot;list&quot;))</span>
+<span class="cm">rc = new(&quot;Myclass&quot;)</span>
+<span class="cm">ex_RObjectMethods(rc)</span>
+
+<span class="cm">## $is_null</span>
+<span class="cm">## [1] FALSE</span>
+<span class="cm">##</span>
+<span class="cm">## $type</span>
+<span class="cm">## [1] 25</span>
+<span class="cm">##</span>
+<span class="cm">## $has_class</span>
+<span class="cm">## [1] TRUE</span>
+<span class="cm">##</span>
+<span class="cm">## $is_S4</span>
+<span class="cm">## [1] TRUE</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">RObject</a><ul>
+<li><a class="reference internal" href="#public-member-functions">Public Member Functions</a><ul>
+<li><a class="reference internal" href="#constructors">Constructors</a></li>
+<li><a class="reference internal" href="#defined-in-robject">Defined in <code class="docutils literal"><span class="pre">RObject</span></code></a></li>
+<li><a class="reference internal" href="#inherited-from-preservestorage">Inherited from <strong>PreserveStorage</strong></a></li>
+<li><a class="reference internal" href="#inherited-from-slotproxypolicy">Inherited from <strong>SlotProxyPolicy</strong></a></li>
+<li><a class="reference internal" href="#inherited-from-attributeproxypolicy">Inherited from <strong>AttributeProxyPolicy</strong></a></li>
+<li><a class="reference internal" href="#inherited-from-robjectmethods">Inherited from <strong>RObjectMethods</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../apiclass.html"
+                        title="previous chapter">API Classes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Vector_ctor.html"
+                        title="next chapter">Vector (Typedefs and Constructors)</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/api/RObject.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Vector_ctor.html" title="Vector (Typedefs and Constructors)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../apiclass.html" title="API Classes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Rcpp Note 0.11.3 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../apiclass.html" >API Classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Yixuan Qiu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.
+    </div>
+  </body>
+</html>

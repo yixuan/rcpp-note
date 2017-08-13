@@ -1,0 +1,45 @@
+S4
+=====================================
+
+The **S4** class is a wrapper of S4 objects in R.
+
+Public Member Functions
+-------------------------
+
+Constructors
+~~~~~~~~~~~~~~
+
+.. cpp:function:: S4()
+
+   Default constructor. Resulting in ``R_NilValue``.
+
+.. cpp:function:: S4(const S4& other)
+
+   Copy constructor. Resulting object will share the SEXP data with *other*.
+
+``template <typename Proxy>``
+
+.. cpp:function:: S4(const GenericProxy<Proxy>& proxy)
+
+   Create object from a proxy, such as attribute, slot, field, etc.
+
+.. cpp:function:: S4(SEXP x)
+
+   Wrap a given S4 object.
+
+.. cpp:function:: S4(const std::string& klass)
+
+   Create an S4 object of the requested class.
+
+Defined in **S4**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. cpp:function:: bool is(const std::string& clazz) const
+   
+   Whether this object is an instance of the given S4 class.
+
+Inherited from other classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See :doc:`RObject`.
+

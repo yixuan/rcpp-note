@@ -1,0 +1,707 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Matrix &mdash; Rcpp Note 0.11.3 documentation</title>
+    
+    <link rel="stylesheet" href="../static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../static/jquery-ui.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.11.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/jquery-ui.min.js"></script>
+    <script>
+      $( document ).ready(function() {
+          $(".highlight-cpp").wrap("<div class='accordion-box'></div>").before("<p class='accordion-header'>Show Example</p>");
+          $(".accordion-box").accordion({
+            active: false,
+            collapsible: true,
+            header: "p.accordion-header",
+            heightStyleType: "fill"
+          });
+      });
+    </script>
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-43536203-3', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <link rel="top" title="Rcpp Note 0.11.3 documentation" href="../index.html" />
+    <link rel="up" title="API Classes" href="../apiclass.html" />
+    <link rel="next" title="Environment" href="Environment.html" />
+    <link rel="prev" title="Vector (Member Functions)" href="Vector_funs.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Environment.html" title="Environment"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Vector_funs.html" title="Vector (Member Functions)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Rcpp Note 0.11.3 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../apiclass.html" accesskey="U">API Classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="matrix">
+<h1>Matrix<a class="headerlink" href="#matrix" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="_CPPv26Matrix">
+<span id="Matrix"></span><em class="property">class </em><code class="descclassname"></code><code class="descname">Matrix</code><a class="headerlink" href="#_CPPv26Matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A <a class="reference internal" href="#_CPPv26Matrix" title="Matrix"><code class="xref cpp cpp-class docutils literal"><span class="pre">Matrix</span></code></a> in Rcpp is a <a class="reference internal" href="Vector_ctor.html#_CPPv26Vector" title="Vector"><code class="xref cpp cpp-class docutils literal"><span class="pre">Vector</span></code></a> with dimension attributes.
+It supports all operations defined in <a class="reference internal" href="Vector_ctor.html#_CPPv26Vector" title="Vector"><code class="xref cpp cpp-class docutils literal"><span class="pre">Vector</span></code></a>, and additionally,
+it provides new subsetters to retrieve a row, a column or a submatrix.</p>
+<div class="section" id="type-definitions">
+<h2>Type Definitions<a class="headerlink" href="#type-definitions" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="_CPPv213ComplexMatrix">
+<span id="ComplexMatrix"></span><em class="property">type </em><code class="descclassname"></code><code class="descname">ComplexMatrix</code><a class="headerlink" href="#_CPPv213ComplexMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre>typedef Matrix&lt;CPLXSXP&gt; ComplexMatrix;
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="type">
+<dt id="_CPPv213IntegerMatrix">
+<span id="IntegerMatrix"></span><em class="property">type </em><code class="descclassname"></code><code class="descname">IntegerMatrix</code><a class="headerlink" href="#_CPPv213IntegerMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre>typedef Matrix&lt;INTSXP&gt; IntegerMatrix;
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="type">
+<dt id="_CPPv213LogicalMatrix">
+<span id="LogicalMatrix"></span><em class="property">type </em><code class="descclassname"></code><code class="descname">LogicalMatrix</code><a class="headerlink" href="#_CPPv213LogicalMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre>typedef Matrix&lt;LGLSXP&gt; LogicalMatrix;
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="type">
+<dt id="_CPPv213NumericMatrix">
+<span id="NumericMatrix"></span><em class="property">type </em><code class="descclassname"></code><code class="descname">NumericMatrix</code><a class="headerlink" href="#_CPPv213NumericMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre>typedef Matrix&lt;REALSXP&gt; NumericMatrix;
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="type">
+<dt id="_CPPv29RawMatrix">
+<span id="RawMatrix"></span><em class="property">type </em><code class="descclassname"></code><code class="descname">RawMatrix</code><a class="headerlink" href="#_CPPv29RawMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre>typedef Matrix&lt;RAWSXP&gt; RawMatrix;
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="type">
+<dt id="_CPPv215CharacterMatrix">
+<span id="CharacterMatrix"></span><em class="property">type </em><code class="descclassname"></code><code class="descname">CharacterMatrix</code><a class="headerlink" href="#_CPPv215CharacterMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre>typedef Matrix&lt;STRSXP&gt; CharacterMatrix;
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="type">
+<dt id="_CPPv212StringMatrix">
+<span id="StringMatrix"></span><em class="property">type </em><code class="descclassname"></code><code class="descname">StringMatrix</code><a class="headerlink" href="#_CPPv212StringMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre>typedef Matrix&lt;STRSXP&gt; StringMatrix;
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="type">
+<dt id="_CPPv213GenericMatrix">
+<span id="GenericMatrix"></span><em class="property">type </em><code class="descclassname"></code><code class="descname">GenericMatrix</code><a class="headerlink" href="#_CPPv213GenericMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre>typedef Matrix&lt;VECSXP&gt; GenericMatrix;
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="type">
+<dt id="_CPPv210ListMatrix">
+<span id="ListMatrix"></span><em class="property">type </em><code class="descclassname"></code><code class="descname">ListMatrix</code><a class="headerlink" href="#_CPPv210ListMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre>typedef Matrix&lt;VECSXP&gt; ListMatrix;
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="type">
+<dt id="_CPPv216ExpressionMatrix">
+<span id="ExpressionMatrix"></span><em class="property">type </em><code class="descclassname"></code><code class="descname">ExpressionMatrix</code><a class="headerlink" href="#_CPPv216ExpressionMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python"><div class="highlight"><pre>typedef Matrix&lt;EXPRSXP&gt; ExpressionMatrix;
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="public-member-functions">
+<h2>Public Member Functions<a class="headerlink" href="#public-member-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="constructors">
+<h3>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv2N6Matrix6MatrixEv">
+<span id="Matrix::Matrix"></span><code class="descclassname">Matrix::</code><code class="descname">Matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6Matrix6MatrixEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a matrix with zero row and zero column.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6Matrix6MatrixERK6Matrix">
+<span id="Matrix::Matrix__MatrixCR"></span><code class="descclassname">Matrix::</code><code class="descname">Matrix</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv2N6Matrix6MatrixEv" title="Matrix::Matrix">Matrix</a> &amp;<em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6Matrix6MatrixERK6Matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy constructor. Resulting object will share the SEXP data with <em>other</em>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6Matrix6MatrixE4SEXP">
+<span id="Matrix::Matrix__SEXP"></span><code class="descclassname">Matrix::</code><code class="descname">Matrix</code><span class="sig-paren">(</span>SEXP <em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6Matrix6MatrixE4SEXP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap a given Matrix. A type conversion will be conducted if types don&#8217;t match.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6Matrix6MatrixERK9Dimension">
+<span id="Matrix::Matrix__DimensionCR"></span><code class="descclassname">Matrix::</code><code class="descname">Matrix</code><span class="sig-paren">(</span><em class="property">const</em> Dimension &amp;<em>dims</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6Matrix6MatrixERK9Dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Matrix with the given dimension, and fill it with zeros. The <strong>Dimension</strong>
+class is defined in <code class="docutils literal"><span class="pre">&lt;Rcpp/Dimension.h&gt;</span></code>. An example:</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>Rcpp<span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&quot;NumericMatrix(Dimension(2, 3))&quot;</span><span class="p">)</span>
+<span class="c1">##      [,1] [,2] [,3]</span>
+<span class="c1">## [1,]    0    0    0</span>
+<span class="c1">## [2,]    0    0    0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6Matrix6MatrixERKiRKi">
+<span id="Matrix::Matrix__iCR.iCR"></span><code class="descclassname">Matrix::</code><code class="descname">Matrix</code><span class="sig-paren">(</span><em class="property">const</em> int &amp;<em>nrows_</em>, <em class="property">const</em> int &amp;<em>ncols</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6Matrix6MatrixERKiRKi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Matrix with <em>nrows_</em> rows and <em>ncols</em> columns, and fill it with zeros.</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>Rcpp<span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&quot;NumericMatrix(2, 3)&quot;</span><span class="p">)</span>
+<span class="c1">##      [,1] [,2] [,3]</span>
+<span class="c1">## [1,]    0    0    0</span>
+<span class="c1">## [2,]    0    0    0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename Iterator&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv2N6Matrix6MatrixERKiRKi8Iterator">
+<span id="Matrix::Matrix__iCR.iCR.Iterator"></span><code class="descclassname">Matrix::</code><code class="descname">Matrix</code><span class="sig-paren">(</span><em class="property">const</em> int &amp;<em>nrows_</em>, <em class="property">const</em> int &amp;<em>ncols</em>, Iterator <em>start</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6Matrix6MatrixERKiRKi8Iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Matrix with <em>nrows_</em> rows and <em>ncols</em> columns, and fill it with data starting from <em>start</em>.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Matrix_data</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">double</span> <span class="n">src</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">};</span>
+    <span class="k">return</span> <span class="n">NumericMatrix</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">src</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">ex_Matrix_data()</span>
+<span class="cm">##      [,1] [,2]</span>
+<span class="cm">## [1,]    1    3</span>
+<span class="cm">## [2,]    2    4</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6Matrix6MatrixERKi">
+<span id="Matrix::Matrix__iCR"></span><code class="descclassname">Matrix::</code><code class="descname">Matrix</code><span class="sig-paren">(</span><em class="property">const</em> int &amp;<em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6Matrix6MatrixERKi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a diagonal Matrix with <em>n</em> rows and <em>n</em> columns, and fill it with zeroes.</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>Rcpp<span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&quot;NumericMatrix(2)&quot;</span><span class="p">)</span>
+<span class="c1">##      [,1] [,2]</span>
+<span class="c1">## [1,]    0    0</span>
+<span class="c1">## [2,]    0    0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;bool NA, typename MAT&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv2N6Matrix6MatrixERK10MatrixBaseI5RTYPE2NA3MATE">
+<span id="Matrix::Matrix__MatrixBase:RTYPE.NA.MAT:CR"></span><code class="descclassname">Matrix::</code><code class="descname">Matrix</code><span class="sig-paren">(</span><em class="property">const</em> MatrixBase&lt;RTYPE, NA, MAT&gt; &amp;<em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6Matrix6MatrixERK10MatrixBaseI5RTYPE2NA3MATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a matrix from another object that is also derived from the <strong>MatrixBase</strong> class.
+Typically <em>other</em> is an Rcpp sugar expression, such as the example below:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Matrix_fromsugar</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">NumericMatrix</span> <span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+    <span class="n">IntegerMatrix</span> <span class="n">y</span> <span class="o">=</span> <span class="n">col</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="c1">// rhs is a sugar expression</span>
+    <span class="k">return</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">ex_Matrix_fromsugar()</span>
+<span class="cm">##      [,1] [,2] [,3]</span>
+<span class="cm">## [1,]    1    2    3</span>
+<span class="cm">## [2,]    1    2    3</span>
+<span class="cm">## [3,]    1    2    3</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2N6Matrix6MatrixERK9SubMatrixI5RTYPEE">
+<span id="Matrix::Matrix__SubMatrix:RTYPE:CR"></span><code class="descclassname">Matrix::</code><code class="descname">Matrix</code><span class="sig-paren">(</span><em class="property">const</em> SubMatrix&lt;RTYPE&gt; &amp;<em>sub</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N6Matrix6MatrixERK9SubMatrixI5RTYPEE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a matrix from a submatrix.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Matrix_fromsub</span><span class="p">(</span><span class="n">NumericMatrix</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">NumericMatrix</span><span class="o">::</span><span class="n">Sub</span> <span class="n">sub</span> <span class="o">=</span> <span class="n">x</span><span class="p">(</span><span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="n">NumericMatrix</span> <span class="n">res</span><span class="p">(</span><span class="n">sub</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">x = matrix(as.numeric(1:9), 3, 3)</span>
+<span class="cm">ex_Matrix_fromsub(x, 2);</span>
+<span class="cm">##      [,1] [,2]</span>
+<span class="cm">## [1,]    1    4</span>
+<span class="cm">## [2,]    2    5</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="defined-in-matrix">
+<h3>Defined in <a class="reference internal" href="#_CPPv26Matrix" title="Matrix"><code class="xref cpp cpp-class docutils literal"><span class="pre">Matrix</span></code></a><a class="headerlink" href="#defined-in-matrix" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv2NK4ncolEv">
+<span id="ncolC"></span>int <code class="descclassname"></code><code class="descname">ncol</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK4ncolEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of columns.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK4nrowEv">
+<span id="nrowC"></span>int <code class="descclassname"></code><code class="descname">nrow</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK4nrowEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of rows.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK4colsEv">
+<span id="colsC"></span>int <code class="descclassname"></code><code class="descname">cols</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK4colsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias of <code class="docutils literal"><span class="pre">ncol()</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK4rowsEv">
+<span id="rowsC"></span>int <code class="descclassname"></code><code class="descname">rows</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK4rowsEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias of <code class="docutils literal"><span class="pre">nrow()</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv23rowi">
+<span id="row__i"></span>Row <code class="descclassname"></code><code class="descname">row</code><span class="sig-paren">(</span>int <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv23rowi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the <em>i</em>-th row (0-based).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv26columni">
+<span id="column__i"></span>Column <code class="descclassname"></code><code class="descname">column</code><span class="sig-paren">(</span>int <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26columni" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the <em>i</em>-th column (0-based).</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Matrix_rowcol</span><span class="p">(</span><span class="n">NumericMatrix</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ir</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ic</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">NumericMatrix</span><span class="o">::</span><span class="n">Row</span>    <span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">row</span><span class="p">(</span><span class="n">ir</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">NumericMatrix</span><span class="o">::</span><span class="n">Column</span> <span class="n">c</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">column</span><span class="p">(</span><span class="n">ic</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="c1">// Row and Column act as vectors</span>
+    <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">// They can also be assigned to vectors</span>
+    <span class="n">NumericVector</span> <span class="n">rvec</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span>
+    <span class="n">NumericVector</span> <span class="n">cvec</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">List</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">Named</span><span class="p">(</span><span class="s">&quot;row&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">rvec</span><span class="p">,</span> <span class="n">Named</span><span class="p">(</span><span class="s">&quot;col&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="n">cvec</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">x = matrix(as.numeric(1:9), 3, 3)</span>
+<span class="cm">ex_Matrix_rowcol(x, 2, 2);</span>
+<span class="cm">## $row</span>
+<span class="cm">## [1] 0 5 8</span>
+<span class="cm">##</span>
+<span class="cm">## $col</span>
+<span class="cm">## [1] 0 5 6</span>
+<span class="cm">x</span>
+<span class="cm">##      [,1] [,2] [,3]</span>
+<span class="cm">## [1,]    1    0    7</span>
+<span class="cm">## [2,]    0    5    8</span>
+<span class="cm">## [3,]    3    6    9</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv25beginv">
+<span id="begin"></span>iterator <code class="descclassname"></code><code class="descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv25beginv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator pointing to the first element of the matrix.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv23endv">
+<span id="end"></span>iterator <code class="descclassname"></code><code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv23endv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator pointing to the <em>past-the-end</em> element of the matrix.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK5beginEv">
+<span id="beginC"></span>const_iterator <code class="descclassname"></code><code class="descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK5beginEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator pointing to the first element of the matrix.
+Read-only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK3endEv">
+<span id="endC"></span>const_iterator <code class="descclassname"></code><code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK3endEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator pointing to the <em>past-the-end</em> element of the matrix.
+Read-only.</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename U&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv29fill_diagRK1U">
+<span id="fill_diag__UCR"></span>void <code class="descclassname"></code><code class="descname">fill_diag</code><span class="sig-paren">(</span><em class="property">const</em> U &amp;<em>u</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv29fill_diagRK1U" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the diagonal elements of this matrix with <em>u</em>.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Matrix_filldiag</span><span class="p">(</span><span class="n">NumericMatrix</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">fill_diag</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">x = matrix(as.numeric(1:9), 3, 3)</span>
+<span class="cm">ex_Matrix_filldiag(x);</span>
+<span class="cm">x</span>
+<span class="cm">##      [,1] [,2] [,3]</span>
+<span class="cm">## [1,]    0    4    7</span>
+<span class="cm">## [2,]    2    0    8</span>
+<span class="cm">## [3,]    3    6    0</span>
+
+<span class="cm">## This leads to unexpected results</span>
+<span class="cm">x2 = matrix(as.numeric(1:8), 2, 4)</span>
+<span class="cm">ex_Matrix_filldiag(x2);</span>
+<span class="cm">##      [,1] [,2] [,3] [,4]</span>
+<span class="cm">## [1,]    0    3    5    7</span>
+<span class="cm">## [2,]    2    4    0    8</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2ixi">
+<span id="subscript-operator__i"></span>Proxy <code class="descclassname"></code><code class="descname">operator[]</code><span class="sig-paren">(</span>int <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2ixi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the reference of the <em>i</em>-th element (0-based) of the matrix <strong>without</strong>
+bound check.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NKixEi">
+<span id="subscript-operator__iC"></span>const_Proxy <code class="descclassname"></code><code class="descname">operator[]</code><span class="sig-paren">(</span>int <em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKixEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the <em>i</em>-th element of the vector <strong>without</strong> bound check. Read-only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2clRK6size_tRK6size_t">
+<span id="call-operator__sCR.sCR"></span>Proxy <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> size_t &amp;<em>i</em>, <em class="property">const</em> size_t &amp;<em>j</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2clRK6size_tRK6size_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the reference of the element in <em>i</em>-th row and <em>j</em>-th column (both 0-based)
+with bound check.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NKclERK6size_tRK6size_t">
+<span id="call-operator__sCR.sCRC"></span>const_Proxy <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> size_t &amp;<em>i</em>, <em class="property">const</em> size_t &amp;<em>j</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKclERK6size_tRK6size_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the element in <em>i</em>-th row and <em>j</em>-th column (both 0-based) with bound check.
+Read-only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2cliN8internal16NamedPlaceHolderE">
+<span id="call-operator__i.internal::NamedPlaceHolder"></span>Row <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span>int <em>i</em>, internal::NamedPlaceHolder<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2cliN8internal16NamedPlaceHolderE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the <em>i</em>-th row of the matrix (0-based). The symbol <code class="docutils literal"><span class="pre">_</span></code> can be used as a placeholder
+for the second argument.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2clN8internal16NamedPlaceHolderEi">
+<span id="call-operator__internal::NamedPlaceHolder.i"></span>Column <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span>internal::NamedPlaceHolder, int <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2clN8internal16NamedPlaceHolderEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the <em>i</em>-th column of the matrix. The symbol <code class="docutils literal"><span class="pre">_</span></code> can be used as a placeholder
+for the first argument.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NKclEN8internal16NamedPlaceHolderEi">
+<span id="call-operator__internal::NamedPlaceHolder.iC"></span>Column <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span>internal::NamedPlaceHolder, int <em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKclEN8internal16NamedPlaceHolderEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the <em>i</em>-th column of the matrix. Read-only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2clRK5RangeRK5Range">
+<span id="call-operator__RangeCR.RangeCR"></span>Sub <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> Range &amp;<em>row_range</em>, <em class="property">const</em> Range &amp;<em>col_range</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2clRK5RangeRK5Range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the submatrix specified by the row range and column range.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2clN8internal16NamedPlaceHolderERK5Range">
+<span id="call-operator__internal::NamedPlaceHolder.RangeCR"></span>Sub <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span>internal::NamedPlaceHolder, <em class="property">const</em> Range &amp;<em>col_range</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2clN8internal16NamedPlaceHolderERK5Range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select several columns of this matrix.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2clRK5RangeN8internal16NamedPlaceHolderE">
+<span id="call-operator__RangeCR.internal::NamedPlaceHolder"></span>Sub <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> Range &amp;<em>row_range</em>, internal::NamedPlaceHolder<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2clRK5RangeN8internal16NamedPlaceHolderE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select several rows of this matrix.</p>
+</dd></dl>
+
+<p>Examples of matrix subsetters:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Matrix_subsetter</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">double</span> <span class="n">src</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">};</span>
+    <span class="n">NumericMatrix</span> <span class="n">mat</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">src</span><span class="p">);</span>
+    <span class="n">Rcout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Matrix:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">Rf_PrintValue</span><span class="p">(</span><span class="n">mat</span><span class="p">);</span>
+
+    <span class="c1">// Single index subsetter</span>
+    <span class="n">Rcout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">First element: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">mat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">Rcout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">Last element: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">mat</span><span class="p">[</span><span class="n">mat</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+    <span class="c1">// double indices subsetter</span>
+    <span class="n">Rcout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">(1, 3) element: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">mat</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+    <span class="c1">// Get the first row</span>
+    <span class="n">NumericVector</span> <span class="n">r</span> <span class="o">=</span> <span class="n">mat</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_</span><span class="p">);</span>
+    <span class="n">Rcout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">First row:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">Rf_PrintValue</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+
+    <span class="c1">// Get the first two rows</span>
+    <span class="n">NumericMatrix</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">mat</span><span class="p">(</span><span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">_</span><span class="p">);</span>
+    <span class="n">Rcout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">First two rows:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">Rf_PrintValue</span><span class="p">(</span><span class="n">rs</span><span class="p">);</span>
+
+    <span class="c1">// Get the last column</span>
+    <span class="n">NumericVector</span> <span class="n">c</span> <span class="o">=</span> <span class="n">mat</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">mat</span><span class="p">.</span><span class="n">ncol</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">Rcout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">Last column:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">Rf_PrintValue</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+
+    <span class="c1">// Get columns 1 to 3</span>
+    <span class="n">NumericMatrix</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">mat</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">Range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+    <span class="n">Rcout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">Columns 1 to 3:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">Rf_PrintValue</span><span class="p">(</span><span class="n">cs</span><span class="p">);</span>
+
+    <span class="c1">// Submatrix from (2, 2) to (3, 4)</span>
+    <span class="n">NumericMatrix</span> <span class="n">sub</span> <span class="o">=</span> <span class="n">mat</span><span class="p">(</span><span class="n">Range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">Range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span>
+    <span class="n">Rcout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">(2, 2) to (3, 4) block:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">Rf_PrintValue</span><span class="p">(</span><span class="n">sub</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">R_NilValue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">invisible(ex_Matrix_subsetter())</span>
+<span class="cm">## Matrix:</span>
+<span class="cm">##      [,1] [,2] [,3] [,4]</span>
+<span class="cm">## [1,]    1    4    7   10</span>
+<span class="cm">## [2,]    2    5    8   11</span>
+<span class="cm">## [3,]    3    6    9   12</span>
+<span class="cm">##</span>
+<span class="cm">## First element: 1</span>
+<span class="cm">##</span>
+<span class="cm">## Last element: 12</span>
+<span class="cm">##</span>
+<span class="cm">## (1, 3) element: 7</span>
+<span class="cm">##</span>
+<span class="cm">## First row:</span>
+<span class="cm">## [1]  1  4  7 10</span>
+<span class="cm">##</span>
+<span class="cm">## First two rows:</span>
+<span class="cm">##      [,1] [,2] [,3] [,4]</span>
+<span class="cm">## [1,]    1    4    7   10</span>
+<span class="cm">## [2,]    2    5    8   11</span>
+<span class="cm">##</span>
+<span class="cm">## Last column:</span>
+<span class="cm">## [1] 10 11 12</span>
+<span class="cm">##</span>
+<span class="cm">## Columns 1 to 3:</span>
+<span class="cm">##      [,1] [,2] [,3]</span>
+<span class="cm">## [1,]    1    4    7</span>
+<span class="cm">## [2,]    2    5    8</span>
+<span class="cm">## [3,]    3    6    9</span>
+<span class="cm">##</span>
+<span class="cm">## (2, 2) to (3, 4) block:</span>
+<span class="cm">##      [,1] [,2] [,3]</span>
+<span class="cm">## [1,]    5    8   11</span>
+<span class="cm">## [2,]    6    9   12</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="static-public-member-functions">
+<h2>Static Public Member Functions<a class="headerlink" href="#static-public-member-functions" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename U&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv24diagiRK1U">
+<span id="diag__i.UCR"></span><em class="property">static</em> <a class="reference internal" href="#_CPPv26Matrix" title="Matrix">Matrix</a> <code class="descclassname"></code><code class="descname">diag</code><span class="sig-paren">(</span>int <em>size</em>, <em class="property">const</em> U &amp;<em>diag_value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv24diagiRK1U" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <em>size</em> by <em>size</em> diagonal matrix and fill the diagonal
+elements with <em>diag_value</em>.</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>Rcpp<span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&quot;NumericMatrix::diag(3, 1.2)&quot;</span><span class="p">)</span>
+<span class="c1">##      [,1] [,2] [,3]</span>
+<span class="c1">## [1,]  1.2  0.0  0.0</span>
+<span class="c1">## [2,]  0.0  1.2  0.0</span>
+<span class="c1">## [3,]  0.0  0.0  1.2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Matrix</a><ul>
+<li><a class="reference internal" href="#type-definitions">Type Definitions</a></li>
+<li><a class="reference internal" href="#public-member-functions">Public Member Functions</a><ul>
+<li><a class="reference internal" href="#constructors">Constructors</a></li>
+<li><a class="reference internal" href="#defined-in-matrix">Defined in <code class="docutils literal"><span class="pre">Matrix</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#static-public-member-functions">Static Public Member Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Vector_funs.html"
+                        title="previous chapter">Vector (Member Functions)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Environment.html"
+                        title="next chapter">Environment</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/api/Matrix.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Environment.html" title="Environment"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Vector_funs.html" title="Vector (Member Functions)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Rcpp Note 0.11.3 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../apiclass.html" >API Classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Yixuan Qiu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,988 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Vector (Member Functions) &mdash; Rcpp Note 0.11.3 documentation</title>
+    
+    <link rel="stylesheet" href="../static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../static/jquery-ui.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.11.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/jquery-ui.min.js"></script>
+    <script>
+      $( document ).ready(function() {
+          $(".highlight-cpp").wrap("<div class='accordion-box'></div>").before("<p class='accordion-header'>Show Example</p>");
+          $(".accordion-box").accordion({
+            active: false,
+            collapsible: true,
+            header: "p.accordion-header",
+            heightStyleType: "fill"
+          });
+      });
+    </script>
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-43536203-3', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <link rel="top" title="Rcpp Note 0.11.3 documentation" href="../index.html" />
+    <link rel="up" title="API Classes" href="../apiclass.html" />
+    <link rel="next" title="Matrix" href="Matrix.html" />
+    <link rel="prev" title="Vector (Typedefs and Constructors)" href="Vector_ctor.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Matrix.html" title="Matrix"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Vector_ctor.html" title="Vector (Typedefs and Constructors)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Rcpp Note 0.11.3 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../apiclass.html" accesskey="U">API Classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="vector-member-functions">
+<h1>Vector (Member Functions)<a class="headerlink" href="#vector-member-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="public-member-functions">
+<h2>Public Member Functions<a class="headerlink" href="#public-member-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="defined-in-vector">
+<h3>Defined  in <a class="reference internal" href="Vector_ctor.html#_CPPv26Vector" title="Vector"><code class="xref cpp cpp-class docutils literal"><span class="pre">Vector</span></code></a><a class="headerlink" href="#defined-in-vector" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv2NK6lengthEv">
+<span id="lengthC"></span>R_len_t <code class="descclassname"></code><code class="descname">length</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6lengthEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the length of the vector.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">int</span> <span class="nf">ex_Vector_length</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">ex_Vector_length(rnorm(5))  ## 5</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK4sizeEv">
+<span id="sizeC"></span>R_len_t <code class="descclassname"></code><code class="descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK4sizeEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the length of the vector, alias of <code class="docutils literal"><span class="pre">length()</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6offsetERK6size_tRK6size_t">
+<span id="offset__sCR.sCRC"></span>size_t <code class="descclassname"></code><code class="descname">offset</code><span class="sig-paren">(</span><em class="property">const</em> size_t &amp;<em>i</em>, <em class="property">const</em> size_t &amp;<em>j</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6offsetERK6size_tRK6size_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>When this is actually a matrix, give the offset (i.e., the index) of the element
+in row <em>i</em> and column <em>j</em> (both 0-based).</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">int</span> <span class="nf">ex1_Vector_offset</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">set.seed(123)</span>
+<span class="cm">m = matrix(rnorm(24), 4, 6)</span>
+<span class="cm">ex1_Vector_offset(m, 2, 4)  ## 14</span>
+<span class="cm">m[2, 4]  ## 0.110682</span>
+<span class="cm">m[ex1_Vector_offset(m, 2, 4)]  ## 0.110682</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6offsetERK6size_t">
+<span id="offset__sCRC"></span>size_t <code class="descclassname"></code><code class="descname">offset</code><span class="sig-paren">(</span><em class="property">const</em> size_t &amp;<em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6offsetERK6size_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give the offset of the <em>i</em>-th element with bound check. 0-based.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">int</span> <span class="nf">ex2_Vector_offset</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v = c(10, 20, 30)</span>
+<span class="cm">ex2_Vector_offset(v, 1)  ## 1</span>
+<span class="cm">ex2_Vector_offset(v, 3)  ## index out of bounds error</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK6offsetERKNSt6stringE">
+<span id="offset__ssCRC"></span>size_t <code class="descclassname"></code><code class="descname">offset</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK6offsetERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give the offset of the element whose name is <em>name</em> in the vector. 0-based.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">int</span> <span class="nf">ex3_Vector_offset</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v1 = c(a = 10, b = 20, 30)</span>
+<span class="cm">ex3_Vector_offset(v1)  ## 0</span>
+<span class="cm">v2 = c(c = 40, d = 50)</span>
+<span class="cm">ex3_Vector_offset(v2)  ## index out of bounds error</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename U&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv24fillRK1U">
+<span id="fill__UCR"></span>void <code class="descclassname"></code><code class="descname">fill</code><span class="sig-paren">(</span><em class="property">const</em> U &amp;<em>u</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv24fillRK1U" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the vector with value <em>u</em>.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_fill</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">NumericVector</span> <span class="n">xx</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+    <span class="n">xx</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="mf">2.0</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">xx</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v1 = c(2, 1, 3)</span>
+<span class="cm">ex_Vector_fill(v1)</span>
+<span class="cm">## [1] 2 2 2</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv25beginv">
+<span id="begin"></span>iterator <code class="descclassname"></code><code class="descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv25beginv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator pointing to the first element of the vector.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">int</span> <span class="nf">ex_Vector_iterator</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// another way to get the length of a vector</span>
+    <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">distance</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">x</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+    <span class="c1">// iterators can be casted to pointers</span>
+    <span class="kt">double</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+    <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">len</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v = c(2, 1, 3)</span>
+<span class="cm">ex_Vector_iterator(v)  ## 3</span>
+<span class="cm">v</span>
+<span class="cm">## [1] 5 1 3</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv23endv">
+<span id="end"></span>iterator <code class="descclassname"></code><code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv23endv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator pointing to the <em>past-the-end</em> element of the vector.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK5beginEv">
+<span id="beginC"></span>const_iterator <code class="descclassname"></code><code class="descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK5beginEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator pointing to the first element of the vector. Read-only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK3endEv">
+<span id="endC"></span>const_iterator <code class="descclassname"></code><code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK3endEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator pointing to the <em>past-the-end</em> element of the vector. Read-only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2ixi">
+<span id="subscript-operator__i"></span>Proxy <code class="descclassname"></code><code class="descname">operator[]</code><span class="sig-paren">(</span>int <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2ixi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the reference of the <em>i</em>-th element (0-based) of the vector <strong>without</strong>
+bound check.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">double</span> <span class="nf">ex1_Vector_indexer</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v = c(2, 1, 5)</span>
+<span class="cm">ex1_Vector_indexer(v)  ## 5</span>
+<span class="cm">v</span>
+<span class="cm">## [1] 5 1 5</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NKixEi">
+<span id="subscript-operator__iC"></span>const_Proxy <code class="descclassname"></code><code class="descname">operator[]</code><span class="sig-paren">(</span>int <em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKixEi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the <em>i</em>-th element of the vector <strong>without</strong> bound check. Read-only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2clRK6size_t">
+<span id="call-operator__sCR"></span>Proxy <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> size_t &amp;<em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2clRK6size_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the reference of the <em>i</em>-th element of the vector <strong>with</strong>
+bound check.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">double</span> <span class="nf">ex2_Vector_indexer</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">(</span><span class="mi">999</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v = c(2, 1, 5)</span>
+<span class="cm">ex2_Vector_indexer(v)  ## index out of bounds error</span>
+<span class="cm">v</span>
+<span class="cm">## [1] 5 1 5</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NKclERK6size_t">
+<span id="call-operator__sCRC"></span>const_Proxy <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> size_t &amp;<em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKclERK6size_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the <em>i</em>-th element of the vector <strong>with</strong> bound check. Read-only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2clRK6size_tRK6size_t">
+<span id="call-operator__sCR.sCR"></span>Proxy <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> size_t &amp;<em>i</em>, <em class="property">const</em> size_t &amp;<em>j</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2clRK6size_tRK6size_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>When this is a matrix, get the reference of the element in row <em>i</em> and
+column <em>j</em> (both 0-based).</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">double</span> <span class="nf">ex3_Vector_indexer</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v = matrix(as.numeric(1:9), 3, 3)</span>
+<span class="cm">ex3_Vector_indexer(v)  ## 5</span>
+<span class="cm">v</span>
+<span class="cm">##      [,1] [,2] [,3]</span>
+<span class="cm">## [1,]    0    4    7</span>
+<span class="cm">## [2,]    2    5    8</span>
+<span class="cm">## [3,]    3    6    9</span>
+
+<span class="cm">ex3_Vector_indexer(as.numeric(v))  ## error: not a matrix</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NKclERK6size_tRK6size_t">
+<span id="call-operator__sCR.sCRC"></span>const_Proxy <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> size_t &amp;<em>i</em>, <em class="property">const</em> size_t &amp;<em>j</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKclERK6size_tRK6size_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>When this is a matrix, get the the element in row <em>i</em> and column <em>j</em>
+(both 0-based).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2ixRKNSt6stringE">
+<span id="subscript-operator__ssCR"></span>NameProxy <code class="descclassname"></code><code class="descname">operator[]</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2ixRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the reference of the element whose name is <em>name</em> in the vector.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="kt">double</span> <span class="nf">ex4_Vector_indexer</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="n">name</span><span class="p">];</span>  <span class="c1">// same as x(name)</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v = c(a = 2, b = 1, 5)</span>
+<span class="cm">ex4_Vector_indexer(v, &quot;a&quot;)  ## 0</span>
+<span class="cm">v</span>
+<span class="cm">## a b</span>
+<span class="cm">## 0 1 5</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2clRKNSt6stringE">
+<span id="call-operator__ssCR"></span>NameProxy <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2clRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ditto.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NKixERKNSt6stringE">
+<span id="subscript-operator__ssCRC"></span>NameProxy <code class="descclassname"></code><code class="descname">operator[]</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKixERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the element whose name is <em>name</em> in the vector. Read-only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NKclERKNSt6stringE">
+<span id="call-operator__ssCRC"></span>NameProxy <code class="descclassname"></code><code class="descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKclERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ditto.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NKcv7RObjectEv">
+<span id="castto-RObject-operatorC"></span><code class="descclassname"></code><code class="descname">operator RObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKcv7RObjectEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to <a class="reference internal" href="RObject.html#_CPPv27RObject" title="RObject"><code class="xref cpp cpp-class docutils literal"><span class="pre">RObject</span></code></a> object.</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;int RHS_RTYPE, bool RHS_NA, typename RHS_T&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv2ixRK10VectorBaseI9RHS_RTYPE6RHS_NA5RHS_TE">
+<span id="subscript-operator__VectorBase:RHS_RTYPE.RHS_NA.RHS_T:CR"></span>SubsetProxy&lt;RTYPE, StoragePolicy, RHS_RTYPE, RHS_NA, RHS_T&gt; <code class="descclassname"></code><code class="descname">operator[]</code><span class="sig-paren">(</span><em class="property">const</em> VectorBase&lt;RHS_RTYPE, RHS_NA, RHS_T&gt; &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2ixRK10VectorBaseI9RHS_RTYPE6RHS_NA5RHS_TE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use sugar expression to subset the vector.</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;int RHS_RTYPE, bool RHS_NA, typename RHS_T&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv2NKixERK10VectorBaseI9RHS_RTYPE6RHS_NA5RHS_TE">
+<span id="subscript-operator__VectorBase:RHS_RTYPE.RHS_NA.RHS_T:CRC"></span><em class="property">const</em> SubsetProxy&lt;RTYPE, StoragePolicy, RHS_RTYPE, RHS_NA, RHS_T&gt; <code class="descclassname"></code><code class="descname">operator[]</code><span class="sig-paren">(</span><em class="property">const</em> VectorBase&lt;RHS_RTYPE, RHS_NA, RHS_T&gt; &amp;<em>rhs</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NKixERK10VectorBaseI9RHS_RTYPE6RHS_NA5RHS_TE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use sugar expression to subset the vector. Read-only.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv24sortv">
+<span id="sort"></span><a class="reference internal" href="Vector_ctor.html#_CPPv26Vector" title="Vector">Vector</a> &amp;<code class="descclassname"></code><code class="descname">sort</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv24sortv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the vector in place in increasing order, and return the sorted vector.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><code class="docutils literal"><span class="pre">sort()</span></code> cannot be used on <a class="reference internal" href="Vector_ctor.html#_CPPv29RawVector" title="RawVector"><code class="xref cpp cpp-type docutils literal"><span class="pre">RawVector</span></code></a>, <a class="reference internal" href="Vector_ctor.html#_CPPv24List" title="List"><code class="xref cpp cpp-type docutils literal"><span class="pre">List</span></code></a> (<a class="reference internal" href="Vector_ctor.html#_CPPv213GenericVector" title="GenericVector"><code class="xref cpp cpp-type docutils literal"><span class="pre">GenericVector</span></code></a>) and <a class="reference internal" href="Vector_ctor.html#_CPPv216ExpressionVector" title="ExpressionVector"><code class="xref cpp cpp-type docutils literal"><span class="pre">ExpressionVector</span></code></a>.</p>
+</div>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_sort</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">NumericVector</span> <span class="n">y</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">y</span><span class="p">.</span><span class="n">sort</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v = c(2, 1, 3)</span>
+<span class="cm">ex_Vector_sort(v)</span>
+<span class="cm">## [1] 1 2 3</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename InputIterator&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv26assign13InputIterator13InputIterator">
+<span id="assign__InputIterator.InputIterator"></span>void <code class="descclassname"></code><code class="descname">assign</code><span class="sig-paren">(</span>InputIterator <em>first</em>, InputIterator <em>last</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26assign13InputIterator13InputIterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy and assign the data between <em>first</em> and <em>last</em> to this vector. An example:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_assign</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">NumericVector</span> <span class="n">x</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>  <span class="c1">// originally of length 10</span>
+    <span class="kt">double</span> <span class="n">src</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">src</span> <span class="o">+</span> <span class="mi">3</span><span class="p">);</span>  <span class="c1">// now becomes c(1, 2, 3)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">ex_Vector_assign()</span>
+<span class="cm">## [1] 1 2 3</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename T&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv29push_backRK1T">
+<span id="push_back__TCR"></span>void <code class="descclassname"></code><code class="descname">push_back</code><span class="sig-paren">(</span><em class="property">const</em> T &amp;<em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv29push_backRK1T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a new element <em>object</em> to this vector.</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename T&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv29push_backRK1TRKNSt6stringE">
+<span id="push_back__TCR.ssCR"></span>void <code class="descclassname"></code><code class="descname">push_back</code><span class="sig-paren">(</span><em class="property">const</em> T &amp;<em>object</em>, <em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv29push_backRK1TRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a new element <em>object</em> with name <em>name</em> to this vector.</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename T&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv210push_frontRK1T">
+<span id="push_front__TCR"></span>void <code class="descclassname"></code><code class="descname">push_front</code><span class="sig-paren">(</span><em class="property">const</em> T &amp;<em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv210push_frontRK1T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new element <em>object</em> to the front of this vector.</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename T&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv210push_frontRK1TRKNSt6stringE">
+<span id="push_front__TCR.ssCR"></span>void <code class="descclassname"></code><code class="descname">push_front</code><span class="sig-paren">(</span><em class="property">const</em> T &amp;<em>object</em>, <em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv210push_frontRK1TRKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new element <em>object</em> with name <em>name</em> to the front of this vector.</p>
+<p>An example for the four functions above:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_elements</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s">&quot;ten&quot;</span><span class="p">);</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">push_front</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">push_front</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s">&quot;nine&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// c(nine = 9, 2, 1, ten = 10)</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v = c(1, 2, 3)</span>
+<span class="cm">ex_Vector_elements(v)</span>
+<span class="cm">## nine                           ten</span>
+<span class="cm">##    9    2    1    2    3    1   10</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename T&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv26insert8iteratorRK1T">
+<span id="insert__iterator.TCR"></span>iterator <code class="descclassname"></code><code class="descname">insert</code><span class="sig-paren">(</span>iterator <em>position</em>, <em class="property">const</em> T &amp;<em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26insert8iteratorRK1T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert new element <em>object</em> before the element pointed to by <em>position</em>.
+Return the pointer to the newly added element.</p>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename T&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv26insertiRK1T">
+<span id="insert__i.TCR"></span>iterator <code class="descclassname"></code><code class="descname">insert</code><span class="sig-paren">(</span>int <em>position</em>, <em class="property">const</em> T &amp;<em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26insertiRK1T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert new element <em>object</em> before the <em>position</em>-th element (0-based).
+Return the pointer to the newly added element.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_insert</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">NumericVector</span> <span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kt">double</span> <span class="o">*</span><span class="n">iter</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+    <span class="n">iter</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">iter</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">iter</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>  <span class="c1">// c(3, 2.5, 2, 0)</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">ex_Vector_insert()</span>
+<span class="cm">## [1] 3.0 2.5 2.0 0.0</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv25erasei">
+<span id="erase__i"></span>iterator <code class="descclassname"></code><code class="descname">erase</code><span class="sig-paren">(</span>int <em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv25erasei" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the <em>position</em>-th element (0-based).
+Return the pointer to the new location of the element that followed the
+erased element.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv25erase8iterator">
+<span id="erase__iterator"></span>iterator <code class="descclassname"></code><code class="descname">erase</code><span class="sig-paren">(</span>iterator <em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv25erase8iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the element pointed to by <em>position</em>.
+Return the pointer to the new location of the element that followed the
+erased element.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv25eraseii">
+<span id="erase__i.i"></span>iterator <code class="descclassname"></code><code class="descname">erase</code><span class="sig-paren">(</span>int <em>first</em>, int <em>last</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv25eraseii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the elements in the range [<em>first</em>, <em>last</em>).
+Return the pointer to the new location of the element that followed the
+last erased element.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv25erase8iterator8iterator">
+<span id="erase__iterator.iterator"></span>iterator <code class="descclassname"></code><code class="descname">erase</code><span class="sig-paren">(</span>iterator <em>first</em>, iterator <em>last</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv25erase8iterator8iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the elements in the range [<em>first</em>, <em>last</em>).
+Return the pointer to the new location of the element that followed the
+last erased element.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_erase</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">NumericVector</span> <span class="n">x</span> <span class="o">=</span> <span class="n">NumericVector</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
+    <span class="kt">double</span> <span class="o">*</span><span class="n">iter</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+    <span class="n">iter</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">iter</span> <span class="o">+</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// remove 2 and 3</span>
+    <span class="c1">// now x becomes c(1, 4, 5, 6, 7)</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">iter</span><span class="p">);</span> <span class="c1">// remove 4</span>
+    <span class="c1">// now x becomes c(1, 5, 6, 7)</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span> <span class="c1">// remove 6 and 7</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// c(1, 5)</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">ex_Vector_erase()</span>
+<span class="cm">## [1] 1 5</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK20containsElementNamedEPKc">
+<span id="containsElementNamed__cCPC"></span>bool <code class="descclassname"></code><code class="descname">containsElementNamed</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>target</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK20containsElementNamedEPKc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this vector contains an element with the target name.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_contain</span><span class="p">(</span><span class="n">List</span> <span class="n">lst</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">containsx</span> <span class="o">=</span> <span class="n">lst</span><span class="p">.</span><span class="n">containsElementNamed</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">wrap</span><span class="p">(</span><span class="n">containsx</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">l1 = list(x = 1, y = 2)</span>
+<span class="cm">l2 = list(1, 2)</span>
+<span class="cm">ex_Vector_contain(l1)  ## TRUE</span>
+<span class="cm">ex_Vector_contain(l2)  ## FALSE</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK8findNameERKNSt6stringE">
+<span id="findName__ssCRC"></span>int <code class="descclassname"></code><code class="descname">findName</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK8findNameERKNSt6stringE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the index of the element whose name is <em>name</em> in the vector. If not
+found, an error will be given.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_find</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">v</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">wrap</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">findName</span><span class="p">(</span><span class="n">name</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">v = c(z = 1, y = 2, x = 3)</span>
+<span class="cm">ex_Vector_find(v, &quot;x&quot;)  ## 2 (note that index in C++ is zero-based)</span>
+<span class="cm">ex_Vector_find(v, &quot;w&quot;)  ## error: no name &#39;w&#39; found</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK4evalEv">
+<span id="evalC"></span>SEXP <code class="descclassname"></code><code class="descname">eval</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK4evalEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the vector in global environment. It may only make sense for <a class="reference internal" href="Vector_ctor.html#_CPPv216ExpressionVector" title="ExpressionVector"><code class="xref cpp cpp-type docutils literal"><span class="pre">ExpressionVector</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK4evalE4SEXP">
+<span id="eval__SEXPC"></span>SEXP <code class="descclassname"></code><code class="descname">eval</code><span class="sig-paren">(</span>SEXP <em>env</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK4evalE4SEXP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the vector in the environment given by <em>env</em>. It may only make sense for <a class="reference internal" href="Vector_ctor.html#_CPPv216ExpressionVector" title="ExpressionVector"><code class="xref cpp cpp-type docutils literal"><span class="pre">ExpressionVector</span></code></a>.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex1_Vector_eval</span><span class="p">(</span><span class="n">ExpressionVector</span> <span class="n">expr</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">expr</span><span class="p">.</span><span class="n">eval</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">R_NilValue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex2_Vector_eval</span><span class="p">(</span><span class="n">ExpressionVector</span> <span class="n">expr</span><span class="p">,</span> <span class="n">SEXP</span> <span class="n">env</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">expr</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span><span class="n">env</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">R_NilValue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">expr = expression(x &lt;- 1, y &lt;- x + 1)</span>
+<span class="cm">ex1_Vector_eval(expr)</span>
+<span class="cm">ls()</span>
+<span class="cm">## [1] &quot;ex1_Vector_eval&quot; &quot;ex2_Vector_eval&quot; &quot;expr&quot;            &quot;x&quot;</span>
+<span class="cm">## [5] &quot;y&quot;</span>
+<span class="cm">env = new.env()</span>
+<span class="cm">ex2_Vector_eval(expr, env)</span>
+<span class="cm">ls(envir = env)</span>
+<span class="cm">## [1] &quot;x&quot; &quot;y&quot;</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="inherited-from-namesproxypolicy">
+<h3>Inherited from <strong>NamesProxyPolicy</strong><a class="headerlink" href="#inherited-from-namesproxypolicy" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv25namesv">
+<span id="names"></span>NamesProxy <code class="descclassname"></code><code class="descname">names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv25namesv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the names of this vector. This can appear in
+the left hand side of assignment.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv2NK5namesEv">
+<span id="namesC"></span>const_NamesProxy <code class="descclassname"></code><code class="descname">names</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv2NK5namesEv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the names of this vector. Read-only.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_getname</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">v</span><span class="p">.</span><span class="n">names</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_setname</span><span class="p">(</span><span class="n">NumericVector</span> <span class="n">v</span><span class="p">,</span> <span class="n">CharacterVector</span> <span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">NumericVector</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+    <span class="n">v2</span><span class="p">.</span><span class="n">names</span><span class="p">()</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">v2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">x = c(a = 1, b = 2, 3)</span>
+<span class="cm">ex_Vector_getname(x)</span>
+<span class="cm">## [1] &quot;a&quot; &quot;b&quot; &quot;&quot;</span>
+<span class="cm">ex_Vector_setname(x, c(&quot;x&quot;, &quot;y&quot;))</span>
+<span class="cm">##    x    y &lt;NA&gt;</span>
+<span class="cm">##    1    2    3</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="inherited-from-other-classes">
+<h3>Inherited from other classes<a class="headerlink" href="#inherited-from-other-classes" title="Permalink to this headline">¶</a></h3>
+<p>See <a class="reference internal" href="RObject.html#_CPPv27RObject" title="RObject"><code class="xref cpp cpp-class docutils literal"><span class="pre">RObject</span></code></a>.</p>
+</div>
+</div>
+<div class="section" id="static-public-member-functions">
+<h2>Static Public Member Functions<a class="headerlink" href="#static-public-member-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv26get_nav">
+<span id="get_na"></span><em class="property">static</em> store_type <code class="descclassname"></code><code class="descname">get_na</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26get_nav" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <code class="docutils literal"><span class="pre">NA</span></code> of the same type as elements in the vector.</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>Rcpp<span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&quot;NumericVector::get_na()&quot;</span><span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&quot;IntegerVector::get_na()&quot;</span><span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&quot;List::get_na()&quot;</span><span class="p">)</span>  <span class="c1">## will get NULL</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv25is_na11stored_type">
+<span id="is_na__stored_type"></span><em class="property">static</em> bool <code class="descclassname"></code><code class="descname">is_na</code><span class="sig-paren">(</span>stored_type <em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv25is_na11stored_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether <em>x</em> is <code class="docutils literal"><span class="pre">NA</span></code> (of the proper type).</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>Rcpp<span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&quot;NumericVector::is_na(NA_REAL)&quot;</span><span class="p">)</span>    <span class="c1">## TRUE</span>
+evalCpp<span class="p">(</span><span class="s">&quot;NumericVector::is_na(R_PosInf)&quot;</span><span class="p">)</span>   <span class="c1">## FALSE</span>
+evalCpp<span class="p">(</span><span class="s">&quot;List::is_na(R_NilValue)&quot;</span><span class="p">)</span>          <span class="c1">## FALSE (!!)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename InputIterator&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv26import13InputIterator13InputIterator">
+<span id="import__InputIterator.InputIterator"></span><em class="property">static</em> <a class="reference internal" href="Vector_ctor.html#_CPPv26Vector" title="Vector">Vector</a> <code class="descclassname"></code><code class="descname">import</code><span class="sig-paren">(</span>InputIterator <em>first</em>, InputIterator <em>last</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26import13InputIterator13InputIterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a vector filled with the data between <em>first</em> and <em>last</em>.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">Rcpp</span><span class="p">;</span>
+
+<span class="c1">// [[Rcpp::export]]</span>
+<span class="n">RObject</span> <span class="nf">ex_Vector_import</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">double</span> <span class="n">src</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">};</span>
+    <span class="k">return</span> <span class="n">NumericVector</span><span class="o">::</span><span class="n">import</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">src</span> <span class="o">+</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/*** R</span>
+
+<span class="cm">ex_Vector_import()</span>
+<span class="cm">## [1] 1 2 3</span>
+
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="highlight-python"><div class="highlight"><pre>template &lt;typename InputIterator, typename F&gt;
+</pre></div>
+</div>
+<dl class="function">
+<dt id="_CPPv216import_transform13InputIterator13InputIterator1F">
+<span id="import_transform__InputIterator.InputIterator.F"></span><em class="property">static</em> <a class="reference internal" href="Vector_ctor.html#_CPPv26Vector" title="Vector">Vector</a> <code class="descclassname"></code><code class="descname">import_transform</code><span class="sig-paren">(</span>InputIterator <em>first</em>, InputIterator <em>last</em>, F <em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv216import_transform13InputIterator13InputIterator1F" title="Permalink to this definition">¶</a></dt>
+<dd><p>A direct call to <a class="reference internal" href="Vector_ctor.html#ctor-trans"><span>Vector(InputIterator first, InputIterator last, Func func)</span></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv26createv">
+<span id="create"></span><em class="property">static</em> <a class="reference internal" href="Vector_ctor.html#_CPPv26Vector" title="Vector">Vector</a> <code class="descclassname"></code><code class="descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26createv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a vector of zero length.</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>Rcpp<span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&quot;NumericVector::create()&quot;</span><span class="p">)</span>  <span class="c1">## numeric(0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p><code class="docutils literal"><span class="pre">template</span> <span class="pre">&lt;typename</span> <span class="pre">T1&gt;</span></code></p>
+<dl class="function">
+<dt id="_CPPv26createRK2T1">
+<span id="create__T1CR"></span><em class="property">static</em> <a class="reference internal" href="Vector_ctor.html#_CPPv26Vector" title="Vector">Vector</a> <code class="descclassname"></code><code class="descname">create</code><span class="sig-paren">(</span><em class="property">const</em> T1 &amp;<em>t1</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26createRK2T1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a vector containing element <em>t1</em>. Type will be converted if needed.</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>Rcpp<span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&quot;IntegerVector::create(1.2)&quot;</span><span class="p">)</span>  <span class="c1">## 1, with type conversion</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p><code class="docutils literal"><span class="pre">template</span> <span class="pre">&lt;typename</span> <span class="pre">T1,</span> <span class="pre">typename</span> <span class="pre">T2&gt;</span></code></p>
+<dl class="function">
+<dt id="_CPPv26createRK2T1RK2T2">
+<span id="create__T1CR.T2CR"></span><em class="property">static</em> <a class="reference internal" href="Vector_ctor.html#_CPPv26Vector" title="Vector">Vector</a> <code class="descclassname"></code><code class="descname">create</code><span class="sig-paren">(</span><em class="property">const</em> T1 &amp;<em>t1</em>, <em class="property">const</em> T2 &amp;<em>t2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26createRK2T1RK2T2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a vector containing elements <em>t1</em> and <em>t2</em>.</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>Rcpp<span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&#39;CharacterVector::create(&quot;hello&quot;, &quot;universe&quot;)&#39;</span><span class="p">)</span>
+<span class="c1">## [1] &quot;hello&quot;    &quot;universe&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p><code class="docutils literal"><span class="pre">template</span> <span class="pre">&lt;...&gt;</span></code></p>
+<dl class="function">
+<dt id="_CPPv26createz">
+<span id="create__z"></span><em class="property">static</em> <a class="reference internal" href="Vector_ctor.html#_CPPv26Vector" title="Vector">Vector</a> <code class="descclassname"></code><code class="descname">create</code><span class="sig-paren">(</span>...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv26createz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a vector containing the arguments passed in, up to 20 elements.</p>
+<div class="highlight-r"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>Rcpp<span class="p">)</span>
+evalCpp<span class="p">(</span><span class="s">&#39;List::create(1.2, NumericVector::create(1.0, 2.0, 2.1), &quot;key&quot;)&#39;</span><span class="p">)</span>
+<span class="c1">## [[1]]</span>
+<span class="c1">## [1] 1.2</span>
+<span class="c1">##</span>
+<span class="c1">## [[2]]</span>
+<span class="c1">## [1] 1.0 2.0 2.1</span>
+<span class="c1">##</span>
+<span class="c1">## [[3]]</span>
+<span class="c1">## [1] &quot;key&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Vector (Member Functions)</a><ul>
+<li><a class="reference internal" href="#public-member-functions">Public Member Functions</a><ul>
+<li><a class="reference internal" href="#defined-in-vector">Defined  in <code class="docutils literal"><span class="pre">Vector</span></code></a></li>
+<li><a class="reference internal" href="#inherited-from-namesproxypolicy">Inherited from <strong>NamesProxyPolicy</strong></a></li>
+<li><a class="reference internal" href="#inherited-from-other-classes">Inherited from other classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#static-public-member-functions">Static Public Member Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Vector_ctor.html"
+                        title="previous chapter">Vector (Typedefs and Constructors)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Matrix.html"
+                        title="next chapter">Matrix</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../sources/api/Vector_funs.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Matrix.html" title="Matrix"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Vector_ctor.html" title="Vector (Typedefs and Constructors)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Rcpp Note 0.11.3 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../apiclass.html" >API Classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Yixuan Qiu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.
+    </div>
+  </body>
+</html>
